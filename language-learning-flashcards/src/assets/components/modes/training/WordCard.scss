@@ -1,0 +1,24 @@
+.WordCard{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    img{
+        width: 40%;
+    
+        transform: rotate(90deg);
+        cursor: pointer;
+    }
+}
+
+.word {
+    position: absolute;
+    top: 45%;
+
+    font-size: 50px;
+
+    cursor: pointer;
+}

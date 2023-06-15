@@ -1,0 +1,41 @@
+@font-face {
+	font-family: "Montserrat";
+	src: url(../../../fonts/Montserrat-Regular.ttf);
+}
+
+@font-face {
+	font-family: "ArchivoBlack";
+	src: url(../../../fonts/ArchivoBlack-Regular.ttf);
+}
+
+$default-font: "Montserrat", sans-serif;
+$logo-font: "ArchivoBlack", sans-serif;
+
+$main-color: RGB(238, 130, 8);
+
+.SettingMode{
+    width: 60vw;
+    margin: auto;
+    padding: 10px;
+
+    font-family: $default-font;
+
+    h1{
+        margin: 2vh 0 2vh 0;
+
+        font-size: calc(( 100vw - 142px) / 71);
+    }
+    p {
+        font-size: calc(( 100vw + 256px) / 128);
+        line-height: 150%;
+    }
+}
+
+.SettingMode__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    width: 100%;
+    margin: 2vh 0 2vh 0;
+}

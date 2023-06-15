@@ -1,23 +1,20 @@
-import logo from './logo.svg';
+import Header from './assets/components/Header';
+import SettingMode from './assets/components/modes/SettingMode/SettingMode';
+import AllTheWords from './assets/components/modes/All the words/AllTheWords';
+import TrainingMode from './assets/components/modes/Training/TrainingMode';
+
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header></Header>
+
+      <SettingMode></SettingMode>
+
+      <AllTheWords></AllTheWords>
+
+      <TrainingMode></TrainingMode>
     </div>
   );
 }

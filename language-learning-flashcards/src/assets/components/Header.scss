@@ -1,0 +1,108 @@
+@import url(../styles/variables.scss);
+
+@font-face {
+	font-family: "Montserrat";
+	src: url(../fonts/Montserrat-Regular.ttf);
+}
+
+@font-face {
+	font-family: "ArchivoBlack";
+	src: url(../fonts/ArchivoBlack-Regular.ttf);
+}
+
+$default-font: "Montserrat", sans-serif;
+$logo-font: "ArchivoBlack", sans-serif;
+
+$main-color: RGB(238, 130, 8);
+
+.Header-wrapper{
+    position: sticky;
+    top: 0;
+
+    z-index: 10;
+
+    background-color: RGB(255, 255, 255);
+    
+    border-bottom: 2px solid RGB(241, 241, 242);
+}
+
+.Header{
+    display: grid;
+    grid-template-columns: 40% 1fr 1fr 1fr;
+    grid-template-areas: "logo nothing train all-words";
+    align-items: center;
+
+    width: 60vw;
+    height: 10vh;
+    margin: auto;
+
+    &__menu{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        padding-right: 10%;
+
+        font-family: $default-font;
+        font-size: calc(( 100vw + 256px) / 128);
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+
+    &__logo{
+        display: flex;
+        grid-area: logo;
+
+        height: 100%;
+
+        img {
+            height: 100%;
+        }
+
+        &-text-wrapper{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-end;
+
+            margin-bottom: 1.5vh;
+
+            font-family: $logo-font;
+            font-weight: 900;
+            font-size: calc(( 100vw) / 128);
+
+            div{
+                font-family: $default-font;
+                font-weight: 100;
+            }
+
+            span{
+                color: $main-color;
+            }
+        }
+    }
+
+    li {
+        list-style-type: none;
+
+        cursor: pointer;
+    }
+}
+.Header__menu {
+    transition-duration: 0.3s;
+}
+.Header__menu:hover{
+    transition-duration: 0.3s;
+    color: $main-color;
+}
+
+.Header__menu:active{
+    color: RGB(244, 182, 18);
+}
+
+.cards {
+        grid-area: train;
+    }
+.words{
+        grid-area: all-words;
+    }

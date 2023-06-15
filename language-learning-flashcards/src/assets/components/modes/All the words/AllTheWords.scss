@@ -1,0 +1,30 @@
+$default-font: "Montserrat", sans-serif;
+
+$main-color: RGB(238, 130, 8);
+
+.AllTheWords{
+    width: 60vw;
+    height: auto;
+    margin: auto;
+    padding: 0 10px 10px 10px;
+
+    font-family: $default-font;
+}
+
+.AllTheWords__title{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) 3fr;
+    align-items: center;
+
+    width: 100%;
+    height: 5vh;
+
+    border: 1px solid RGB(241, 241, 242);
+    border-top: 0;
+
+    div {
+        margin-left: 5%;
+
+        border-right: 1px solid RGB(241, 241, 242);
+    }
+}

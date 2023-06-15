@@ -1,0 +1,56 @@
+[
+    {
+        "word": "blue",
+        "transcription": "[bluː]",
+        "translation": "синий",
+        "themes": "цвета"
+    },
+    {
+        "word": "white",
+        "transcription": "[waɪt]",
+        "translation": "белый",
+        "themes": "цвета"
+    },
+    {
+        "word": "gray",
+        "transcription": "[ɡreɪ]",
+        "translation": "серый",
+        "themes": "цвета"
+    },
+    {
+        "word": "black",
+        "transcription": "[blæk]",
+        "translation": "черный",
+        "themes": "цвета"
+    },
+    {
+        "word": "yellow",
+        "transcription": "[ˈjeloʊ]",
+        "translation": "желтый",
+        "themes": "цвета"
+    },
+    {
+        "word": "green",
+        "transcription": "[ɡriːn]",
+        "translation": "зеленый",
+        "themes": "цвета"
+    },
+    {
+        "word": "red",
+        "transcription": "[red]",
+        "translation": "красный",
+        "themes": "цвета"
+    },
+    {
+        "word": "orange",
+        "transcription": "[ˈɔːrɪndʒ]",
+        "translation": "оранжевый",
+        "themes": "цвета"
+    },
+    {
+        "word": "purple",
+        "transcription": "[ˈpɜːrpl]",
+        "translation": "фиолетовый",
+        "themes": "цвета"
+    }
+]

@@ -1,7 +1,7 @@
 import Header from './assets/components/Header';
 import SettingMode from './assets/components/modes/SettingMode/SettingMode';
 import AllTheWords from './assets/components/modes/All the words/AllTheWords';
-import TrainingMode from './assets/components/modes/Training/TrainingMode';
+import TrainingMode from './assets/components/modes/TrainingMode/TrainingMode';
 
 import './App.css';
 

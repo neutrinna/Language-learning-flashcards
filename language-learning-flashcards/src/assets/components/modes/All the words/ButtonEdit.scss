@@ -1,16 +1,5 @@
+@import "../../../styles/variables.scss";
+
 .ButtonEdit{
     grid-area: e;
-    width: 60%;
-    margin-left: 2%;
-
-    opacity: 0.9;
-    cursor: pointer;
-}
-
-.ButtonEdit:hover{
-    opacity: 1;
-}
-
-.ButtonEdit:active{
-    width: 65%;
 }

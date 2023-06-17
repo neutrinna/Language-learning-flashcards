@@ -1,3 +1,5 @@
+@import "../../../styles/variables.scss";
+
 .DontKnowButton{
     display: flex;
     justify-content: center;
@@ -5,8 +7,6 @@
 
     width: 25%;
     height: 70%;
-
-    font-size: 19px;
 
     background-color: RGB(229, 159, 159);
     border-radius: 10px;

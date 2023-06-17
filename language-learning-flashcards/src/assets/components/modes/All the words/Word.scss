@@ -1,26 +1,47 @@
+@import "../../../styles/variables.scss";
+
 .Word{
     display: grid;
-    grid-template-columns: repeat(3, 1fr) 3fr;
+    grid-template-columns: repeat(3, 1fr) 2fr;
     align-items: center;
 
     width: 100%;
     height: 5.5vh;
+    border: 1px solid $border-color;
 
-    border: 1px solid RGB(241, 241, 242);
-
-    div {
-        margin-left: 5%;
-        border-right: 1px solid RGB(241, 241, 242);
+    &__active{
+        background-color: RGB(243, 220, 223);
     }
-}
 
-.Word__options{
-    position: relative;
-    display: grid;
-    align-items: center;
-    grid-template-columns: 60% repeat(3, 1fr);
-    grid-template-areas: "n s e d";
+    &__property {
+        display: flex;
+        align-items: center;
 
-    height: 100%;
-    padding-right: 5%;
+        height: 100%;
+        margin-left: 5%;
+        border-right: 1px solid $border-color;
+
+        input {
+            width: 90%;
+            height: 60%;
+            border: 1px solid $border-color;
+            padding-left: 3%;
+
+            font-family: $default-font;
+            font-size: calc(( 100vw ) / 128);
+
+            outline: none;
+        }
+    }
+
+    &__options{
+        position: relative;
+        display: grid;
+        align-items: center;
+        grid-template-columns: 76% 1fr 1fr;
+        grid-template-areas: "n e d";
+    
+        height: 100%;
+        padding-right: 5%;
+    }
 }

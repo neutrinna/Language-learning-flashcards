@@ -1,16 +1,5 @@
+@import "../../../styles/variables.scss";
+
 .ButtonSave{
-    grid-area: s;
-    width: 50%;
-    margin-left: 2%;
-
-    opacity: 0.9;
-    cursor: pointer;
-}
-
-.ButtonSave:hover{
-    opacity: 1;
-}
-
-.ButtonSave:active{
-    width: 55%;
+    grid-area: e;
 }

@@ -1,9 +1,4 @@
-@font-face {
-	font-family: "ArchivoBlack";
-	src: url(../../../fonts/ArchivoBlack-Regular.ttf);
-}
-
-$logo-font: "ArchivoBlack", sans-serif;
+@import "../../../styles/variables.scss";
 
 .TrainingMode{
     display: flex;
@@ -16,6 +11,8 @@ $logo-font: "ArchivoBlack", sans-serif;
     margin: auto;
 
     font-family: $logo-font;
+    font-size: $title-h3-font-size;
+    font-weight: 500;
 }
 
 .Buttons{

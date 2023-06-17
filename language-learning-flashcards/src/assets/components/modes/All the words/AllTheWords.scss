@@ -1,6 +1,4 @@
-$default-font: "Montserrat", sans-serif;
-
-$main-color: RGB(238, 130, 8);
+@import "../../../styles/variables.scss";
 
 .AllTheWords{
     width: 60vw;
@@ -9,11 +7,12 @@ $main-color: RGB(238, 130, 8);
     padding: 0 10px 10px 10px;
 
     font-family: $default-font;
+    font-size: $default-font-size;
 }
 
 .AllTheWords__title{
     display: grid;
-    grid-template-columns: repeat(3, 1fr) 3fr;
+    grid-template-columns: repeat(3, 1fr) 2fr;
     align-items: center;
 
     width: 100%;
@@ -23,8 +22,14 @@ $main-color: RGB(238, 130, 8);
     border-top: 0;
 
     div {
+        display: flex;
+        align-items: center;
+
+        height: 100%;
         margin-left: 5%;
 
         border-right: 1px solid RGB(241, 241, 242);
+
+        font-size: calc(( 100vw + 256px) / 128);
     }
 }

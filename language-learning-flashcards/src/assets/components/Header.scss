@@ -1,19 +1,4 @@
-@import url(../styles/variables.scss);
-
-@font-face {
-	font-family: "Montserrat";
-	src: url(../fonts/Montserrat-Regular.ttf);
-}
-
-@font-face {
-	font-family: "ArchivoBlack";
-	src: url(../fonts/ArchivoBlack-Regular.ttf);
-}
-
-$default-font: "Montserrat", sans-serif;
-$logo-font: "ArchivoBlack", sans-serif;
-
-$main-color: RGB(238, 130, 8);
+@import '../styles/variables.scss';
 
 .Header-wrapper{
     position: sticky;

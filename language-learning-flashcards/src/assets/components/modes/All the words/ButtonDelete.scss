@@ -1,16 +1,5 @@
+@import "../../../styles/variables.scss";
+
 .ButtonDelete{
     grid-area: d;
-    width: 50%;
-    margin-left: 2%;
-
-    opacity: 0.9;
-    cursor: pointer;
-}
-
-.ButtonDelete:hover{
-    opacity: 1;
-}
-
-.ButtonDelete:active{
-    width: 55%;
 }

@@ -1,0 +1,23 @@
+@import "./variables.scss";
+
+.Button{
+    width: 70%;
+    margin-left: 2%;
+
+    opacity: 0.9;
+    cursor: pointer;
+
+    transition-duration: $default-transition-duration;
+}
+
+.Button:hover{
+    opacity: 1;
+
+    transition-duration: $default-transition-duration;
+}
+
+.Button:active{
+    width: 75%;
+
+    transition-duration: $default-transition-duration;
+}

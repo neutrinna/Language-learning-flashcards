@@ -14,7 +14,7 @@ export default function Header(){
                         <h2><span>ENGLISH</span> FLASHCARDS</h2>
                     </div>
                 </li>
-                <li className='Header__menu cards'>Карточки</li>
+                <li className='Header__menu cards'>Наборы слов</li>
                 <li className='Header__menu words'>Все слова</li>
             </ul>
         </nav>

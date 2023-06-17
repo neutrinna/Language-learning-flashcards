@@ -1,17 +1,4 @@
-@font-face {
-	font-family: "Montserrat";
-	src: url(../../../fonts/Montserrat-Regular.ttf);
-}
-
-@font-face {
-	font-family: "ArchivoBlack";
-	src: url(../../../fonts/ArchivoBlack-Regular.ttf);
-}
-
-$default-font: "Montserrat", sans-serif;
-$logo-font: "ArchivoBlack", sans-serif;
-
-$main-color: RGB(238, 130, 8);
+@import "../../../styles/variables.scss";
 
 .SettingMode{
     width: 60vw;
@@ -26,7 +13,7 @@ $main-color: RGB(238, 130, 8);
         font-size: calc(( 100vw - 142px) / 71);
     }
     p {
-        font-size: calc(( 100vw + 256px) / 128);
+        font-size: $default-font-size;
         line-height: 150%;
     }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import './KnowButton.scss'
+import './KnowButton.scss';
 
 export default function KnowButton(){
-    return(
-        <div className='KnowButton'>Знаю
-        </div>
-    )
+  return(
+    <div className="KnowButton">Знаю
+    </div>
+  );
 }

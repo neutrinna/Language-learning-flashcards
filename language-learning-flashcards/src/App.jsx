@@ -10,11 +10,11 @@ function App() {
     <div className="App">
       <Header></Header>
 
-      <SettingMode></SettingMode>
+      {/* <SettingMode></SettingMode> */}
 
       <AllTheWords></AllTheWords>
 
-      <TrainingMode></TrainingMode>
+      {/* <TrainingMode></TrainingMode> */}
     </div>
   );
 }

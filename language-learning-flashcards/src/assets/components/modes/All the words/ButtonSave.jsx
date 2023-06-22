@@ -4,8 +4,12 @@ import Save from '../../../images/save.svg';
 import '../../../styles/Button.scss';
 import './ButtonSave.scss';
 
-export default function ButtonSave(){
+export default function ButtonSave({ onClick }){
+  function setState(e){
+    onClick(e.target);
+  }
+
   return(
-    <img className="Button ButtonSave" src={Save} alt="кнопка сохранить"/>
+    <img className="Button ButtonSave" src={Save} alt="кнопка сохранить" onClick={setState}/>
   );
 }

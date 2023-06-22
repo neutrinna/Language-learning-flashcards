@@ -12,7 +12,7 @@ function App() {
 
       <SettingMode />
 
-       <AllTheWords />
+      <AllTheWords />
 
       <TrainingMode /> 
     </div>

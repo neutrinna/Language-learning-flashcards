@@ -18,9 +18,7 @@ export default function AllTheWords(){
           return(
             <Word
               key = {index}
-              word = {word.word}
-              transcription = {word.transcription}
-              translation = {word.translation}>
+              {...word}>
             </Word>
           );
         })

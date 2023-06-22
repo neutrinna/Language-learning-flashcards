@@ -7,10 +7,10 @@ import ButtonDelete from './ButtonDelete';
 import './Word.scss';
 
 export default function Word( props ) {
-  const buttonsState = true;
+  let buttonsState = true;
 
   function changeBatonsState(){
-    // что-то, меняющее buttonsState
+    buttonsState ? buttonsState = false : buttonsState = true;
   }
 
   return(

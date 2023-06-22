@@ -8,13 +8,13 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <Header></Header>
+      <Header />
 
-      <SettingMode></SettingMode>
+      <SettingMode />
 
-      <AllTheWords></AllTheWords>
+       <AllTheWords />
 
-      <TrainingMode></TrainingMode>
+      <TrainingMode /> 
     </div>
   );
 }

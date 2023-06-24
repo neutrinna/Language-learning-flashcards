@@ -14,12 +14,11 @@ export default function AllTheWords(){
         <div>Транскрипция</div>
         <div>Перевод</div>
       </div>{
-        data.map((word, index) => {
+        data.map(( word, index ) => {
           return(
             <Word
-              key = {index}
-              {...word}>
-            </Word>
+              key = { index }
+              { ...word }/>
           );
         })
       }

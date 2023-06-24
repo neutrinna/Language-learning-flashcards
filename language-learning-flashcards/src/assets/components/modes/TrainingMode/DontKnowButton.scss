@@ -1,24 +1,9 @@
 @import "../../../styles/variables.scss";
 
 .DontKnowButton{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 25%;
-    height: 70%;
-
-    background-color: RGB(229, 159, 159);
-    border-radius: 10px;
-    transition-duration: 0.5s;
-    cursor: pointer;
+    background-color: rgb(229, 159, 159);
 }
 
 .DontKnowButton:hover{
-    transition-duration: 0.5s;
-    background-color: RGB(255, 85, 85);
-}
-
-.DontKnowButton:active{
-    background-color: RGB(244, 79, 54);
+    background-color: rgb(243, 55, 61);
 }

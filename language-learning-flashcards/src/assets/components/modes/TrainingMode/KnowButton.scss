@@ -1,25 +1,9 @@
 @import "../../../styles/variables.scss";
 
 .KnowButton{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 25%;
-    height: 70%;
-
-    background-color: RGB(169, 212, 198);
-    border-radius: 10px;
-    transition-duration: 0.5s;
-    cursor: pointer;
+    background-color: rgb(169, 212, 198);
 }
 
 .KnowButton:hover{
-    transition-duration: 0.5s;
-    background-color: RGB(121, 192, 20);
-}
-
-.KnowButton:active{
-    transition-duration: 0.5s;
-    background-color: RGB(66, 151, 11);
+    background-color: rgb(18, 164, 85);
 }

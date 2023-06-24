@@ -6,6 +6,6 @@ import './ButtonDelete.scss';
 
 export default function ButtonDelete(){
   return(
-    <img className="ButtonDelete Button" src={Delete} alt="кнопка удалить"/>
+    <img className = "ButtonDelete Button" src = { Delete } alt = "кнопка удалить"/>
   );
 }                                                                                                               

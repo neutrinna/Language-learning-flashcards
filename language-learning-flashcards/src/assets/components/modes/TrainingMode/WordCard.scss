@@ -24,3 +24,17 @@
 
     cursor: pointer;
 }
+
+.word-translate{
+    display: none;
+    position: absolute;
+    bottom: 25%;
+
+    font-size: calc(( 100vw - 142px) / 71);
+    font-weight: 500;
+    color: rgb(105, 105, 105);
+}
+
+.display{
+    display: block;
+}

@@ -10,7 +10,7 @@
     border: 1px solid $border-color;
 
     &__active{
-        background-color: RGB(243, 220, 223);
+        background-color: rgb(243, 220, 223);
     }
 
     &__property {
@@ -38,8 +38,8 @@
         position: relative;
         display: grid;
         align-items: center;
-        grid-template-columns: 76% 1fr 1fr;
-        grid-template-areas: "n e d";
+        grid-template-columns: 65% repeat(3, 1fr);
+        grid-template-areas: "n c e d";
     
         height: 100%;
         padding-right: 5%;

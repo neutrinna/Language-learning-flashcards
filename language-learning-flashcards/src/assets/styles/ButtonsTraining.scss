@@ -1,0 +1,28 @@
+@import "../styles/variables.scss";
+
+.ButtonsTrainining{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 25%;
+    height: 70%;
+    border: none;
+
+    font-family: $logo-font;
+    font-size: $title-h3-font-size;
+    font-weight: 500;
+
+    border-radius: 10px;
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
+
+.ButtonsTrainining:hover{
+    transition-duration: 0.5s;
+}
+
+.ButtonsTrainining:active{
+    transition-duration: 0.5s;
+    transform: scale(1.1);
+}

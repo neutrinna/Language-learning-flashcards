@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import WordCard from './WordCard';
+import Slider from './Slider';
 import KnowButton from './KnowButton';
 import ButtonCheck from './ButtonCheck';
 import DontKnowButton from './DontKnowButton';
@@ -15,7 +15,7 @@ export default function TrainingMode(){
 
   return(
     <main className="TrainingMode">
-      <WordCard translateCheck = {translateCheck}/>
+      <Slider/>
       <div className="Buttons">
         <DontKnowButton/>
         {!translateCheck&&<ButtonCheck onClick = { handleChange }/>}

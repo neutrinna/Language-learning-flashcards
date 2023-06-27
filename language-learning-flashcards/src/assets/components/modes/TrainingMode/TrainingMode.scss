@@ -1,11 +1,6 @@
 @import "../../../styles/variables.scss";
 
 .TrainingMode{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-
     width: 60vw;
     height: 80vh;
     margin: auto;
@@ -18,8 +13,9 @@
 .Buttons{
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
 
     width: 70%;
-    height: 10vh;
+    height: 14%;
+    margin: auto;
 }

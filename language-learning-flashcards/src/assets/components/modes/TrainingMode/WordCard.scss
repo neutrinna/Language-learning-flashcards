@@ -11,24 +11,48 @@
 
     img{
         height: 100%;
+        padding: 5%;
     }
 }
 
 .word {
     position: absolute;
-    top: 45%;
+    top: 43%;
 
-    font-size: calc(( 100vw + 1280px ) / 64);
+    font-family: $logo-font;
+    font-size: calc(( 100vw + 1280px ) / 67);
 }
 
 .word-translate{
     display: none;
     position: absolute;
-    bottom: 25%;
+    bottom: 22%;
 
     font-size: calc(( 100vw - 142px) / 71);
     font-weight: 500;
     color: rgb(105, 105, 105);
+}
+
+.button-check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 22%;
+
+    height: 7%;
+    width: 25%;
+    border-radius: 10px;
+
+    background-color: rgb(19, 165, 85);
+    color: white;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+.button-check:hover {
+    width: 32%;
+    transition: all ease 0.4s;
 }
 
 .display{

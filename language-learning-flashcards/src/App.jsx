@@ -13,9 +13,9 @@ function App() {
     <div className = "App">
       <Header/>
 
-      <SettingMode />
+      {/* <SettingMode /> */}
 
-      <AllTheWords />
+      {/* <AllTheWords /> */}
 
       <TrainingMode /> 
     </div>

@@ -18,6 +18,7 @@ function App() {
       {/* <AllTheWords /> */}
 
       <TrainingMode /> 
+
     </div>
   );
 }

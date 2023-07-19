@@ -7,13 +7,13 @@ import './TrainingMode.scss';
 
 export default function TrainingMode(){
 
-  return(
-    <main className="TrainingMode">
-      <Slider/>
-      <div className="Buttons">
-        <DontKnowButton/>
-        <KnowButton/>
-      </div>
-    </main>
-  );
+    return(
+        <main className="TrainingMode">
+            <Slider/>
+            <div className="Buttons">
+                <DontKnowButton/>
+                <KnowButton/>
+            </div>
+        </main>
+    );
 }

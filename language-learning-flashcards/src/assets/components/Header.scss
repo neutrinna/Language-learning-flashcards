@@ -14,7 +14,7 @@
 .Header{
     display: grid;
     grid-template-columns: 40% 1fr 1fr 1fr;
-    grid-template-areas: "logo nothing train all-words";
+    grid-template-areas: "logo nothing all-words train";
     align-items: center;
 
     width: 60vw;
@@ -76,12 +76,12 @@
 .Header__menu {
     transition-duration: 0.3s;
 }
-.Header__menu:hover{
+.Header__link:hover{
     transition-duration: 0.3s;
     color: $main-color;
 }
 
-.Header__menu:active{
+.Header__link:active{
     color: rgb(244, 182, 18);
 }
 
@@ -91,3 +91,8 @@
 .words{
         grid-area: all-words;
     }
+
+.Link{
+    text-decoration: none;
+    color: black;
+}

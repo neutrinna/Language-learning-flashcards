@@ -1,14 +1,13 @@
+@import '../../../styles/variables.scss';
+
 .Slider {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 100%;
-    height: 80%;
-}
 
-.buttons-slider{
-    width: 10%;
-    height: 5%;
+    width: 90%;
+    height: 80%;
+    margin: auto;
 }
 
 .Slider-wripper {
@@ -25,7 +24,6 @@
 .Slider-line {
     width: 67vh;
     height: 48vh;
-    border: 2px solid black;
 
     overflow: hidden;
 }
@@ -33,11 +31,28 @@
 .Slider-frame {
     position: relative;
     display: flex;
-    // left: 0;
 
     width: calc( 48vh * 9 );
     height: 48vh;
 
     transition: all ease 1s;
+}
+
+.buttons-slider{
+    width: 10%;
+    height: 15%;
+
+    opacity: 0.7;
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
+
+.buttons-slider:hover {
+    opacity: 1;
+    transition-duration: 0.3s;
+}
+
+.buttons-slider:active {
+    transform: scale(1.007);
 }
 

@@ -1,15 +1,15 @@
-@import "../styles/variables.scss";
+@import "./variables.scss";
 
 .ButtonsTrainining{
     display: flex;
     justify-content: center;
     align-items: center;
 
-    width: 25%;
+    width: 35%;
     height: 70%;
     border: none;
 
-    font-family: $logo-font;
+    font-family: $default-font;
     font-size: $title-h3-font-size;
     font-weight: 500;
 

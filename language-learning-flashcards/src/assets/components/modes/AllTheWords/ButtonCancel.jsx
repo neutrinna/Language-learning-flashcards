@@ -5,12 +5,12 @@ import '../../../styles/Button.scss';
 import './ButtonCancel.scss';
 
 export default function ButtonCancel({ onClickCancel }){
-    function calcelPressed( event ){
+    function cancelPressed( event ){
         onClickCancel( event.target );
     }
-  
+
     return(
-        <img className = "Button ButtonCancel" src = { Cancel} alt = "кнопка изменить" onClick = { calcelPressed }/>
+        <img className = "Button ButtonCancel" src = { Cancel} alt = "кнопка изменить" onClick = { cancelPressed }/>
     );
 }
 

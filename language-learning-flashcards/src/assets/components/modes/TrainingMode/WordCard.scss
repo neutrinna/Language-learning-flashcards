@@ -42,6 +42,7 @@
     height: 7%;
     width: 25%;
     border-radius: 10px;
+    border: none;
 
     background-color: rgb(19, 165, 85);
     color: white;
@@ -52,6 +53,9 @@
 .button-check:hover {
     width: 32%;
     transition: all ease 0.4s;
+}
+.button-check:focus {
+    background-color: rgb(20, 20, 85);
 }
 
 .translate-transition-enter {

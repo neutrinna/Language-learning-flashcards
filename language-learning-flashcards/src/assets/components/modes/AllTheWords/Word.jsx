@@ -46,13 +46,13 @@ export default function Word( props ) {
             </section>
             : <section className = "Word Word__active" >
                 <div className = "Word__property word-word">
-                    <input type = "text" defaultValue = { props.word } ref = {word} />
+                    <input type = "text" defaultValue = { props.word } ref = { word } />
                 </div>
                 <div className = "Word__property word-transcription">
-                    <input type = "text" defaultValue = { props.transcription } ref = {transcription}/>
+                    <input type = "text" defaultValue = { props.transcription } ref = { transcription }/>
                 </div>
                 <div className = "Word__property word-translation">
-                    <input type = "text" defaultValue = { props.translation } ref = {translation}/>
+                    <input type = "text" defaultValue = { props.translation } ref = { translation }/>
                 </div>
                 <div className = "Word__options">
                     <ButtonCancel onClickCancel = { resetChanges }/>

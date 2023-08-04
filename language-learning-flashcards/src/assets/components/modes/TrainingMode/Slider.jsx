@@ -17,15 +17,15 @@ export default function Slider( props ){
     const [ learnedWords, setLearnedWords ] = useState ( 0 );
     const ref = useRef();
 
-    const offsetBack = () => {
-        offset -= 67;
+  const offsetBack = () => {
+    offset -= 67;
 
-        if ( offset < 0 ) {
-            offset = 67 * 8;
-        };
-        setOffset( -offset );
-        setCardIndex( offset/67 );
+    if ( offset < 0 ) {
+      offset = 67 * 8;
     };
+    setOffset( -offset );
+    setCardIndex( offset/67 );
+  };
 
     const offsetNext = () => {
         offset += 67;
@@ -75,6 +75,6 @@ export default function Slider( props ){
 }
 
 WordCard.defaultProps = {
-    word: data.word,
-    translate: data.translation
+  word: data.word,
+  translate: data.translation
 };

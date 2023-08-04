@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Language-learning-flashcards/static/css/main.e58ea13a.css",
+    "main.css": "/Language-learning-flashcards/static/css/main.8e615410.css",
     "main.js": "/Language-learning-flashcards/static/js/main.9e97e8da.js",
     "static/media/Montserrat-Regular.ttf": "/Language-learning-flashcards/static/media/Montserrat-Regular.ceb11275ab638627a643.ttf",
     "static/media/ArchivoBlack-Regular.ttf": "/Language-learning-flashcards/static/media/ArchivoBlack-Regular.e35d38651492de9e7226.ttf",
@@ -16,11 +16,11 @@
     "static/media/save.svg": "/Language-learning-flashcards/static/media/save.ba0933f245122279494deab273580d5a.svg",
     "static/media/arrow-forward.svg": "/Language-learning-flashcards/static/media/arrow-forward.b70b257eb0a1c65e6734f3028e783fb0.svg",
     "static/media/arrow-back.svg": "/Language-learning-flashcards/static/media/arrow-back.c00b62c530898547d93758f8bf17cd89.svg",
-    "main.e58ea13a.css.map": "/Language-learning-flashcards/static/css/main.e58ea13a.css.map",
+    "main.8e615410.css.map": "/Language-learning-flashcards/static/css/main.8e615410.css.map",
     "main.9e97e8da.js.map": "/Language-learning-flashcards/static/js/main.9e97e8da.js.map"
   },
   "entrypoints": [
-    "static/css/main.e58ea13a.css",
+    "static/css/main.8e615410.css",
     "static/js/main.9e97e8da.js"
   ]
 }

@@ -40,21 +40,24 @@ export default function Slider( props ){
         let currentLearnedWordsCount = learnedWords;
         currentLearnedWordsCount += 1;
         setLearnedWords( currentLearnedWordsCount );
-        console.log(`Изучено слов: ${currentLearnedWordsCount}`);
+        console.log( `Изучено слов: ${currentLearnedWordsCount}` );
         // sessionStorage.setItem( 'currentLearnedWordsCount', currentLearnedWordsCount );
     };
 
+    const setFocus = () => {
+        ref.current.focus();
+    };
+
     useEffect(() => {
-        console.log(ref.current);
-        // ref.current.focus();
+        setTimeout( setFocus, 1050 );
     }, [ cardIndex ]);
 
     return(
         <div className ="Slider">
             <img src = { arrowBack } alt = "Стрелка назад" className = "buttons-slider"  onClick = { offsetBack }/>
-            <div className ="Slider-wripper">
+            <div className ="Slider-wrapper">
                 <div className = "Slider-line">
-                    <div className = "Slider-frame" style = { { left: -cardIndex*67 + 'vh' } }>
+                    <div className = "Slider-frame" style = { { left: offsetLeft + 'vh' } }>
                         {data.map(( word, index ) => {
                             return(
                                 <WordCard key = { word.word } { ...word }

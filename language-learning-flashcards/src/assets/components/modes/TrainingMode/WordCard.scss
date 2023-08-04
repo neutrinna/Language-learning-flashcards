@@ -55,7 +55,8 @@
     transition: all ease 0.4s;
 }
 .button-check:focus {
-    background-color: rgb(20, 20, 85);
+    outline: none;
+    background-color: rgb(17, 150, 77);
 }
 
 .translate-transition-enter {

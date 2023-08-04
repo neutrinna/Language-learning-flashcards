@@ -5,7 +5,7 @@ import './DontKnowButton.scss';
 
 export default function DontKnowButton(){
     return(
-        <button className = "ButtonsTrainining DontKnowButton">Не знаю
+        <button className = "ButtonsTraining DontKnowButton">Не знаю
         </button>
     );
 }

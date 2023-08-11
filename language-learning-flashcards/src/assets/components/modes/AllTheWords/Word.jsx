@@ -22,7 +22,8 @@ const defaultMistakes = {
 
 const reWord = /[^a-zA-Z]+/;
 const reTranslation = /[^а-яА-ЯёЁ]+/;
-const reTranscription = /[^a-zA-Z:ıæɒɔɜəʌʋʃʒŋθð\[\]]+/;
+// const reTranscription = /[^a-zA-Z\ː\:ıæɒɔɜəʌʋʃʒŋθð\[\]]+/;
+const reTranscription = /[\d\s]+/;
 
 export default function Word( props ) {
     const defaultWord = {
@@ -46,7 +47,7 @@ export default function Word( props ) {
                     // eslint-disable-next-line max-len
                     [e.target.name]: 'Поле слова должно быть заполнено английскими буквами. Оно не может содержать цифры, небуквенные символы или быть пустым' });
             }
-            else setInputMistakes( defaultMistakes );
+            else setInputMistakes({ ...inputMistakes, [e.target.name]:'' });
             break; 
         case 'transcription':
             if(reTranscription.test( e.target.value )) {
@@ -54,7 +55,7 @@ export default function Word( props ) {
                     // eslint-disable-next-line max-len
                     [e.target.name]: 'Поле транскрипции не может содержать цифры или быть пустым' });
             }
-            else setInputMistakes( defaultMistakes );
+            else setInputMistakes({ ...inputMistakes, [e.target.name]:'' });
             break;
         case 'translation':
             if(reTranslation.test( e.target.value )) {
@@ -63,19 +64,17 @@ export default function Word( props ) {
                     [e.target.name]: 'Поле перевода должно быть заполнено русскими буквами. Оно не может содержать цифры, небуквенные символы или быть пустым' });
             }
             else {
-                setInputMistakes( defaultMistakes )};
+                setInputMistakes({ ...inputMistakes, [e.target.name]:'' });}
             break; 
         default: setInputMistakes( defaultMistakes );
         }
     };
 
-    useEffect(() => {
-        console.log('press');
-        console.log( Boolean(Object.values( inputMistakes ).join('')) );
-        try{ Object.values( inputMistakes ).join('')? accordeonWord.current.classList.add('Word__warning_showed')
-            : accordeonWord.current.classList.remove('Word__warning_showed');}
-        catch {console.log(accordeonWord.current);}
-    }, [ savePressed ]);
+    // useEffect(() => {
+    //     try{ Object.values( inputMistakes ).join('')? accordeonWord.current.classList.add('Word__warning_showed')
+    //         : accordeonWord.current.classList.remove('Word__warning_showed');}
+    //     catch {console.log(`accordeonWord.current is ${accordeonWord.current}`);}
+    // }, [ savePressed ]);
     
     const changeButtonsState = ( ) => {
         setButtonState( false );
@@ -144,10 +143,12 @@ export default function Word( props ) {
                     </div>
                 </section>
                 {((savePressed>0)&&Object.values( inputMistakes ).join(''))?
-                    <div className = "Word__warning" ref = { accordeonWord }>
+                    <div className = {(savePressed>0)&&Object.values( inputMistakes ).join('')?
+                        'Word__warning_showed':'Word__warning'}
+                    ref = { accordeonWord }>
                         { Object.values( inputMistakes ).map (( mistake, index ) => {
                             return(
-                                <div  key = { index }>{ mistake }</div>
+                                <div className = "mistake" key = { index }>{ mistake }</div>
                             );
                         })} 
                     </div>: null}

@@ -20,9 +20,9 @@ const defaultMistakes = {
     translation: ''
 };
 
-const reWord = /[a-zA-Z]+/;
-const reTranslation = /[а-яА-Я]+/;
-const reTranscription = /[a-zA-Z:ıæɒɔɜəʌʋʃʒŋθð\[\]]+/;
+const reWord = /[^a-zA-Z]+/;
+const reTranslation = /[^а-яА-ЯёЁ]+/;
+const reTranscription = /[^a-zA-Z:ıæɒɔɜəʌʋʃʒŋθð\[\]]+/;
 
 export default function Word( props ) {
     const defaultWord = {
@@ -35,11 +35,11 @@ export default function Word( props ) {
     const [ absentInput, setAbsentInput ] = useState ( defaultAbsentInputObj );
     const [ fixedWord, setFixedWord ] = useState( defaultWord );
     const [ inputMistakes, setInputMistakes ] = useState( defaultMistakes );
-    const [ mistakesNotification, setMistakesNotification] = useState('');
+    const [ savePressed, setSavePressed ] = useState( 0 );
     const accordeonWord = useRef();
 
     const checkInputsValidation = ( e ) => {
-        switch( String(e.target.name) ){
+        switch( e.target.name ){
         case 'word':
             if(reWord.test( e.target.value )) {
                 setInputMistakes(  {...inputMistakes,
@@ -58,50 +58,40 @@ export default function Word( props ) {
             break;
         case 'translation':
             if(reTranslation.test( e.target.value )) {
-                console.log( true)
                 setInputMistakes(  {...inputMistakes,
                     // eslint-disable-next-line max-len
                     [e.target.name]: 'Поле перевода должно быть заполнено русскими буквами. Оно не может содержать цифры, небуквенные символы или быть пустым' });
             }
             else {
-                console.log( false );
                 setInputMistakes( defaultMistakes )};
             break; 
         default: setInputMistakes( defaultMistakes );
         }
     };
-    useEffect(()=>{
-        if( buttonsState === false){
-            if (mistakesNotification) {
-                const inputMistakesArr = Object.values( inputMistakes );
-                let count = 0;
-                for( const mistake of inputMistakesArr ){
-                    if( mistake !== '') count += 1;
-                }
-                if( count!== 0 ) {
-                    setMistakesNotification( inputMistakesArr.join( ' ' ));
-                };
-                accordeonWord.current.classList.add('Word__warning_showed');
-            }
-            else { setMistakesNotification( defaultMistakes );
-                accordeonWord.current.classList.remove('Word__warning_showed');}
-        }
-    }, [ inputMistakes, mistakesNotification ]);
 
-    // useEffect(() => {
-    //     // if( !mistakesNotification){accordeonWord.current.classList.remove('Word__warning_showed');
-    //         // if( mistakesNotification !== undefined) 
-    //     };
-    // }, [ mistakesNotification ]);
+    useEffect(() => {
+        console.log('press');
+        console.log( Boolean(Object.values( inputMistakes ).join('')) );
+        try{ Object.values( inputMistakes ).join('')? accordeonWord.current.classList.add('Word__warning_showed')
+            : accordeonWord.current.classList.remove('Word__warning_showed');}
+        catch {console.log(accordeonWord.current);}
+    }, [ savePressed ]);
     
     const changeButtonsState = ( ) => {
-        setButtonState( !buttonsState );
+        setButtonState( false );
+    };
+    const saveChanges = () => {
+        setSavePressed( prevState => prevState + 1 );
+        if(!Object.values( inputMistakes ).join('')) {
+            setButtonState( true );
+            setSavePressed( 0 );}
     };
 
     const resetChanges = () => {
         setFixedWord( defaultWord );
-        setButtonState( !buttonsState );
+        setButtonState( true );
         setAbsentInput( defaultAbsentInputObj );
+        setSavePressed( 0 );
     };
 
     const handleWordInputs = e => {
@@ -149,12 +139,18 @@ export default function Word( props ) {
                     </div>
                     <div className = "Word__options">
                         <ButtonCancel onClickCancel = { resetChanges }/>
-                        <ButtonSave onClickSave = { changeButtonsState } absentInput = { absentInput }/>
+                        <ButtonSave onClickSave = { saveChanges } absentInput = { absentInput }/>
                         <ButtonDelete/>
                     </div>
                 </section>
-                <div className = "Word__warning" ref = { accordeonWord }>
-                    { mistakesNotification }</div>
+                {((savePressed>0)&&Object.values( inputMistakes ).join(''))?
+                    <div className = "Word__warning" ref = { accordeonWord }>
+                        { Object.values( inputMistakes ).map (( mistake, index ) => {
+                            return(
+                                <div  key = { index }>{ mistake }</div>
+                            );
+                        })} 
+                    </div>: null}
             </>
     );
 }

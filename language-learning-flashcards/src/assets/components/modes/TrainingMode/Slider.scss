@@ -49,10 +49,11 @@
 
 .buttons-slider:hover {
     opacity: 1;
-    transition-duration: 0.3s;
+    transition: opacity 0.3s;
 }
 
 .buttons-slider:active {
     transform: scale(1.007);
+    transition: transform 0.3s;
 }
 

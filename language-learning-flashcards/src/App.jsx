@@ -11,7 +11,6 @@ import SettingMode from './assets/components/modes/SettingMode/SettingMode';
 import TrainingMode from './assets/components/modes/TrainingMode/TrainingMode';
 import NotFoundPage from './assets/components/NotFoundPage';
 
-
 import './App.css';
 
 function App() {

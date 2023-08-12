@@ -31,6 +31,7 @@
             font-size: calc(( 100vw ) / 128);
 
             outline: none;
+            transition: box-shadow 0.5s;
         }
     }
 
@@ -44,4 +45,35 @@
         height: 100%;
         padding-right: 5%;
     }
+
+    &__warning{
+        margin-top: -7px;
+        max-height: 0px;
+
+        opacity: 0;
+        transition: margin-top 0.3s;
+    }
+}
+
+.incorrect{
+    box-shadow: 0px 0px 3px 2px rgba(251, 52, 22, 0.86);
+    transition: box-shadow 0.5s;
+}
+
+.mistake {
+    margin-bottom: 7px;
+}
+
+.Word__warning_showed{
+    margin-top: 0;
+    padding: 7px 2px 0.2px 7px;
+    width: 100%;
+    max-height: max-content;
+
+    line-height: 150%;
+
+    background-color: rgba(243, 197, 154, 0.164);
+    box-shadow: 1px 6px 8px 1px rgba(34, 60, 80, 0.38);
+    opacity: 1;
+    transition: margin-top 0.3s;
 }

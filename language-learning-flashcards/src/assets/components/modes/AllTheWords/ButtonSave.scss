@@ -3,3 +3,11 @@
 .ButtonSave{
     grid-area: e;
 }
+
+.disabled{
+    opacity: 0.2;
+}
+
+.disabled:hover{
+    opacity: 0.2;
+}

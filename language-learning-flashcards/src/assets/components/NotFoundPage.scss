@@ -29,15 +29,15 @@
 
     text-decoration: underline;
     color: black;
-    transition-duration: 0.3s;
+    transition: color 0.3s;
 }
 
 .NotFoundPage__Link:hover{
-    transition-duration: 0.3s;
     color: $main-color;
+    transition: color 0.3s;
 }
 
 .NotFoundPage__Link:active{
     color: rgb(244, 182, 18);
-    transition-duration: 0.3s;
+    transition: color 0.3s;
 }

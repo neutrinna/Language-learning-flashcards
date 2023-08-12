@@ -73,16 +73,15 @@
         cursor: pointer;
     }
 }
-.Header__menu {
-    transition-duration: 0.3s;
-}
+
 .Header__link:hover{
-    transition-duration: 0.3s;
     color: $main-color;
+    transition: color 0.3s;
 }
 
 .Header__link:active{
     color: rgb(244, 182, 18);
+    transition: color 0.3s;
 }
 
 .cards {

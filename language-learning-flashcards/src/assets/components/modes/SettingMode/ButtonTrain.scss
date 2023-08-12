@@ -9,16 +9,16 @@
 
     opacity: 0.3;
     cursor: pointer;
-    transition-duration: 0.3s;
+    transition: opacity 0.3s;
 }
 
 .ButtonTrain:hover{
-    transition-duration: 0.3s;
     opacity: 1;
+    transition: opacity 0.3s;
 }
 
 .ButtonTrain:active{
     transform: scale(1.1);
     
-    transition-duration: 0.3s;
+    transition: transform 0.3s;
 }

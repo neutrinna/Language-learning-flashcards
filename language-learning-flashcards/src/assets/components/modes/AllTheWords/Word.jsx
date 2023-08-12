@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useRef } from 'react';
 
 import ButtonSave from './ButtonSave';
 import ButtonEdit from './ButtonEdit';
@@ -7,60 +7,143 @@ import ButtonCancel from './ButtonCancel';
 
 import './Word.scss';
 
+const defaultAbsentInputObj = {
+    word: false,
+    transcription: false,
+    translation: false
+};
+
+const defaultMistakes = {
+    word: '',
+    transcription: '',
+    translation: ''
+};
+
+const mistakesText = {
+    // eslint-disable-next-line max-len
+    word: 'Поле слова должно быть заполнено английскими буквами. Оно не может содержать цифры, небуквенные символы или быть пустым',
+    transcription: 'Поле транскрипции не может содержать цифры, пробел или быть пустым',
+    // eslint-disable-next-line max-len
+    translation: 'Поле перевода должно быть заполнено русскими буквами. Оно не может содержать цифры, небуквенные символы или быть пустым'
+};
+
+const reWord = /[^a-zA-Z]+/;
+const reTranscription = /[\d\s]+/;
+// const reTranscription = /[^a-zA-Z\ː\:ıæɒɔɜəʌʋʃʒŋθð\[\]]+/;
+const reTranslation = /[^а-яА-ЯёЁ]+/;
+
 export default function Word( props ) {
-    const changedWord = {};
-    const word = React.createRef();
-    const transcription = React.createRef();
-    const translation = React.createRef();
+    const defaultWord = {
+        word: `${props.word}`,
+        transcription: `${props.transcription}`,
+        translation: `${props.translation}`
+    };
 
     const [ buttonsState, setButtonState ] = useState( true );
-    const [ cancelState, setCancelState ] = useState( true );
+    const [ absentInput, setAbsentInput ] = useState ( defaultAbsentInputObj );
+    const [ fixedWord, setFixedWord ] = useState( defaultWord );
+    const [ inputMistakes, setInputMistakes ] = useState( defaultMistakes );
+    const [ savePressed, setSavePressed ] = useState( 0 );
+    const accordeonWord = useRef();
 
+    const checkInputsValidation = ( e ) => {
+        const name = e.target.name;
+        let regexp;
+        let mistakeText;
+
+        if( name === 'word' ){ 
+            regexp = reWord;
+            mistakeText = mistakesText.word; }
+        else if ( name === 'translation'){ 
+            regexp = reTranslation;
+            mistakeText = mistakesText.translation; }
+        else { 
+            regexp = reTranscription;
+            mistakeText = mistakesText.transcription; }
+
+        regexp.test( e.target.value )?
+            setInputMistakes({ ...inputMistakes, [ name ]: mistakeText })
+            :setInputMistakes({ ...inputMistakes, [ name ]:'' });
+    };
+    
     const changeButtonsState = () => {
-        if( buttonsState ){}
-        else{
-            changedWord.word = word.current.value;
-            changedWord.transcription = transcription.current.value;
-            changedWord.translation = translation.current.value;
-            setCancelState( !cancelState );
-        }
-        setButtonState( !buttonsState );
+        setButtonState( false );
+    };
+    const saveChanges = () => {
+        setSavePressed( prevState => prevState + 1 );
+        if(!Object.values( inputMistakes ).join('')) {
+            setButtonState( true );
+            setSavePressed( 0 );
+            // eslint-disable-next-line no-console
+            console.log( 'word saved', fixedWord );}
     };
 
     const resetChanges = () => {
-        setButtonState( !buttonsState );
+        setFixedWord( defaultWord );
+        setButtonState( true );
+        setAbsentInput( defaultAbsentInputObj );
+        setSavePressed( 0 );
+    };
+
+    const handleWordInputs = e => {
+        if(e.target.value === '') {
+            e.target.classList.add('incorrect');
+            setAbsentInput(  {...absentInput,
+                [e.target.name]: true });
+        }
+        else{
+            e.target.classList.remove('incorrect');
+            setAbsentInput({ ...absentInput,
+                [e.target.name]: false });
+        }
+
+        checkInputsValidation( e );
+        setFixedWord( { ...fixedWord,
+            [e.target.name]: e.target.value.toLowerCase() });
     };
 
     return(
         buttonsState?
             <section className = "Word" >
-                <div className = "Word__property">{ cancelState ? `${ props.word }` : `${ changedWord.word }` }</div>
-                <div  className = "Word__property">
-                    { cancelState ? `${ props.transcription }` : `${ changedWord.transcription }` }</div>
-                <div  className = "Word__property">
-                    { cancelState ? `${ props.translation }` : `${ changedWord.translation }` }</div>
+                <div className = "Word__property">{ fixedWord.word }</div>
+                <div className = "Word__property">{ fixedWord.transcription }</div>
+                <div className = "Word__property">{ fixedWord.translation }</div>
                 <div className = "Word__options">
                     <ButtonEdit onClick = { changeButtonsState }/>
                     <ButtonDelete/>
                 </div>
             </section>
-            : <section className = "Word Word__active" >
-                <div className = "Word__property word-word">
-                    <input type = "text" defaultValue = { props.word } ref = { word } />
-                </div>
-                <div className = "Word__property word-transcription">
-                    <input type = "text" defaultValue = { props.transcription } ref = { transcription }/>
-                </div>
-                <div className = "Word__property word-translation">
-                    <input type = "text" defaultValue = { props.translation } ref = { translation }/>
-                </div>
-                <div className = "Word__options">
-                    <ButtonCancel onClickCancel = { resetChanges }/>
-                    <ButtonSave onClickSave = { changeButtonsState }/>
-                    <ButtonDelete/>
-                </div>
-            </section>
+            
+            : <>
+                <section className = "Word Word__active" >
+                    <div className = "Word__property word-word">
+                        <input type = "text" value = { fixedWord.word } 
+                            name = "word" onChange = { handleWordInputs }/>
+                    </div>
+                    <div className = "Word__property word-transcription">
+                        <input type = "text" value = { fixedWord.transcription }
+                            name = "transcription" onChange = { handleWordInputs }/>
+                    </div>
+                    <div className = "Word__property word-translation">
+                        <input type = "text" value = { fixedWord.translation }
+                            name = "translation" onChange = { handleWordInputs }/>
+                    </div>
+                    <div className = "Word__options">
+                        <ButtonCancel onClickCancel = { resetChanges }/>
+                        <ButtonSave onClickSave = { saveChanges } absentInput = { absentInput }/>
+                        <ButtonDelete/>
+                    </div>
+                </section>
+                {<div className = {(savePressed>0)&&Object.values( inputMistakes ).join('')?
+                    'Word__warning Word__warning_showed':'Word__warning'}
+                ref = { accordeonWord }>
+                    { Object.values( inputMistakes ).map (( mistake, index ) => {
+                        return(
+                            <div className = "mistake" key = { index }>{ mistake }</div>
+                        );
+                    })} 
+                </div>}
+            </>
     );
-
 }
 

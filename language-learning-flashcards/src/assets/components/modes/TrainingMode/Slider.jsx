@@ -49,6 +49,7 @@ export default function Slider( props ){
     };
 
     useEffect(() => {
+        // ref.current.focus();
         setTimeout( setFocus, 1050 );
     }, [ cardIndex ]);
 

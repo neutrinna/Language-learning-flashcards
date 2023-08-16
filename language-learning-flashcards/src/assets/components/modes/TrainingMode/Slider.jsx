@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 
 import data from '../../../data/colors.json';
 import arrowBack from '../../../images/arrow-back.svg';
 import arrowForward from '../../../images/arrow-forward.svg';
+import WordsContext from '../../../providers/WordsContext';
 
 import WordCard from './WordCard';
 
@@ -15,21 +16,26 @@ export default function Slider( props ){
     const [ offsetLeft, setOffset ] = useState( 0 );
     const [ cardIndex, setCardIndex ] = useState( 0 );
     const [ learnedWords, setLearnedWords ] = useState ( 0 );
+    const [ wordsAPI ] = useContext( WordsContext );
+    let cardsArrLength = wordsAPI.length;
     const ref = useRef();
 
     const offsetBack = () => {
+        if( !(wordsAPI === undefined&&wordsAPI.length===0) ) cardsArrLength = data.length;
         offset -= 67;
 
         if ( offset < 0 ) {
-            offset = 67 * 8;
+            offset = 67 * ( cardsArrLength-1 );
         };
         setOffset( -offset );
         setCardIndex( offset/67 );
     };
 
     const offsetNext = () => {
+        if( !(wordsAPI === undefined&&wordsAPI.length===0) ) cardsArrLength = data.length;
         offset += 67;
-        if ( offset > 67 * 8 ) {
+
+        if ( offset > 67 * ( cardsArrLength-1 )) {
             offset = 0;
         };
         setOffset( -offset );
@@ -44,14 +50,13 @@ export default function Slider( props ){
         // sessionStorage.setItem( 'currentLearnedWordsCount', currentLearnedWordsCount );
     };
 
-    const setFocus = () => {
-        ref.current.focus();
-    };
+    // const setFocus = () => {
+    //     if( ref !== undefined ) ref.current.focus();
+    // };
 
-    useEffect(() => {
-        // ref.current.focus();
-        setTimeout( setFocus, 1050 );
-    }, [ cardIndex ]);
+    // useEffect(() => {
+    //     if( ref !== undefined ) setTimeout( setFocus, 1050 );
+    // }, [ cardIndex ]);
 
     return(
         <div className ="Slider">
@@ -59,13 +64,20 @@ export default function Slider( props ){
             <div className ="Slider-wrapper">
                 <div className = "Slider-line">
                     <div className = "Slider-frame" style = { { left: offsetLeft + 'vh' } }>
-                        {data.map(( word, index ) => {
-                            return(
-                                <WordCard key = { word.word } { ...word }
+                        { wordsAPI !== undefined&&wordsAPI.length !==0 ?
+                            wordsAPI.map(( word, index ) => {
+                                console.log('data');
+                                return (<WordCard key = { word.id } 
+                                    word = { word.english }
+                                    transcription = { word.transcription }
+                                    translation = { word.russian }
                                     countWordCheck = { countWordCheck }
                                     className = "wordCard"
                                     ref = {  cardIndex === index ? ref : null }
-                                /> );})
+                                /> );}):
+                            data.map(( word, index ) => {
+                                return <WordCard key = { index } {...word} countWordCheck = { countWordCheck }/>;
+                            })
                         }
                     </div>
                 </div>

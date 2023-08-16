@@ -30,7 +30,7 @@ const mistakesText = {
 const reWord = /[^a-zA-Z]+/;
 const reTranscription = /[\d\s]+/;
 // const reTranscription = /[^a-zA-Z\ː\:ıæɒɔɜəʌʋʃʒŋθð\[\]]+/;
-const reTranslation = /[^а-яА-ЯёЁ]+/;
+const reTranslation = /[^а-яА-ЯёЁ\,\/]+/;
 
 export default function Word( props ) {
     const defaultWord = {

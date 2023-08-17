@@ -41,7 +41,7 @@ function App() {
     //     return <h1>Выполняется загрузка...</h1>
     // }
     return (
-        <WordsContext.Provider value = {[ wordsAPI ]}>
+        <WordsContext.Provider value = {[ wordsAPI, setWordsAPI ]}>
             <div className = "App">
                 <Router>
                     <Header/>

@@ -28,7 +28,8 @@ export default function AllTheWords(){
                 word = { '' }
                 transcription = { '' }
                 translation = { '' }
-                wordAddPressed = { wordAddPressed}/>
+                wordAddPressed = { wordAddPressed }
+                setWordAddPressed = { setWordAddPressed }/>
             }
             { 
                 ( wordsAPI !== undefined&&wordsAPI.length !== 0 )?

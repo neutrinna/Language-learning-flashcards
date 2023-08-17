@@ -32,17 +32,19 @@ const reTranscription = /[\d\s]+/;
 const reTranslation = /[^а-яА-ЯёЁ\,\/]+/;
 
 export default function WordAddingForm( props ) {
-    const defaultWord = {
-        word: `${props.word}`,
-        transcription: `${props.transcription}`,
-        translation: `${props.translation}`
+    const defaultInputs = {
+        word: '',
+        transcription: '',
+        translation: ''
     };
 
     const [ absentInput, setAbsentInput ] = useState ( defaultAbsentInputObj );
-    const [ fixedWord, setFixedWord ] = useState( defaultWord );
+    const [ fixedWord, setFixedWord ] = useState( defaultInputs );
     const [ inputMistakes, setInputMistakes ] = useState( defaultMistakes );
     const [ savePressed, setSavePressed ] = useState( 0 );
-    const [ wordsAPI ] = useContext( WordsContext );
+    const [ wordsAPI, setWordsAPI ] = useContext( WordsContext );
+    const [ isLoading, setIsLoading ] = useState( true );
+    const [ error, setError ] = useState( {} );
     const accordeonWord = useRef();
 
     const checkInputsValidation = ( e ) => {
@@ -65,36 +67,52 @@ export default function WordAddingForm( props ) {
             :setInputMistakes({ ...inputMistakes, [ name ]:'' });
     };
 
-    const setNewId = () => {
-        if( wordsAPI !== undefined&&wordsAPI.length !== 0 ){
-            console.log(wordsAPI.length);
-            return ( wordsAPI.length );
-        }
-    };
-
     const saveChanges = () => {
         setSavePressed( prevState => prevState + 1 );
         if(!Object.values( inputMistakes ).join('')) {
             setSavePressed( 0 );
-            // eslint-disable-next-line no-console
-            console.log( 'word saved', fixedWord );}
-        fetch( 'api/words/add', {
-            method: 'POST',
-            body: { ...fixedWord,
-                id: setNewId()},
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
-            }
-        })
-            .then( response => response.json() );
-        console.log( setNewId());
-    };
+            
+            const newWord = {
+                english: fixedWord.word,
+                transcription: fixedWord.transcription,
+                russian: fixedWord.translation
+            };
 
-    // const resetChanges = () => {
-    //     setFixedWord( defaultWord );
-    //     setAbsentInput( defaultAbsentInputObj );
-    //     setSavePressed( 0 );
-    // };
+            fetch( 'api/words/add', {
+                method: 'POST',
+                body: JSON.stringify( newWord ),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                }
+            })
+                .then( response => response.json() )
+                .then( newWord => {
+                    console.log( newWord );
+                })
+                .catch( error => console.log( `Ошибка отправки слова на сервер: ${error}` ));
+            
+            fetch( '/api/words' )
+                .then( response => {
+                    if( response.ok ){
+                        return response.json();
+                    } else{
+                        throw new Error( 'Ошибка в выполнении запроса к серверу' );
+                    }})
+                .then( response  => {
+                    console.log( response );
+                    setWordsAPI( response );
+                    setIsLoading( false );}
+                )
+                .catch( error => {
+                    setError( error );
+                    setIsLoading( false );
+                });
+            // eslint-disable-next-line no-console
+            console.log( 'word saved', fixedWord );
+        
+            setFixedWord( defaultInputs );
+            props.setWordAddPressed( !props.wordAddPressed );};
+    };
 
     const handleWordInputs = e => {
         if(e.target.value === '') {

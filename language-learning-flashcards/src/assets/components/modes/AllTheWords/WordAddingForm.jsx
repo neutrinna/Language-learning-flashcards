@@ -1,15 +1,17 @@
 import React, { useState, useRef, useContext } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 import WordsContext from '../../../providers/WordsContext';
+import Loader from '../../Loader';
 
 import ButtonSave from './ButtonSave';
 
 import './Word.scss';
 
 const defaultAbsentInputObj = {
-    word: false,
-    transcription: false,
-    translation: false
+    word: true,
+    transcription: true,
+    translation: true
 };
 
 const defaultMistakes = {
@@ -42,11 +44,11 @@ export default function WordAddingForm( props ) {
     const [ fixedWord, setFixedWord ] = useState( defaultInputs );
     const [ inputMistakes, setInputMistakes ] = useState( defaultMistakes );
     const [ savePressed, setSavePressed ] = useState( 0 );
-    const [ wordsAPI, setWordsAPI ] = useContext( WordsContext );
-    const [ isLoading, setIsLoading ] = useState( true );
+    const [ wordsAPI, setWordsAPI, isLoading, setIsLoading ] = useContext( WordsContext );
     const [ error, setError ] = useState( {} );
     const accordeonWord = useRef();
 
+    setIsLoading(true);
     const checkInputsValidation = ( e ) => {
         const name = e.target.name;
         let regexp;
@@ -70,6 +72,7 @@ export default function WordAddingForm( props ) {
     const saveChanges = () => {
         setSavePressed( prevState => prevState + 1 );
         if(!Object.values( inputMistakes ).join('')) {
+            setIsLoading( true );
             setSavePressed( 0 );
             
             const newWord = {
@@ -88,8 +91,11 @@ export default function WordAddingForm( props ) {
                 .then( response => response.json() )
                 .then( newWord => {
                     console.log( newWord );
+                    setTimeout( () => setIsLoading( false ), 700 );
                 })
-                .catch( error => console.log( `Ошибка отправки слова на сервер: ${error}` ));
+                .catch( error => { console.log( `Ошибка отправки слова на сервер: ${error}`);
+                    setTimeout( () => setIsLoading( false ), 700 );
+                });
             
             fetch( '/api/words' )
                 .then( response => {
@@ -99,19 +105,18 @@ export default function WordAddingForm( props ) {
                         throw new Error( 'Ошибка в выполнении запроса к серверу' );
                     }})
                 .then( response  => {
-                    console.log( response );
                     setWordsAPI( response );
-                    setIsLoading( false );}
-                )
+                    setTimeout( () => setIsLoading( false ), 700 );})
                 .catch( error => {
                     setError( error );
-                    setIsLoading( false );
+                    setTimeout( () => setIsLoading( false ), 700 );
                 });
             // eslint-disable-next-line no-console
             console.log( 'word saved', fixedWord );
         
             setFixedWord( defaultInputs );
-            props.setWordAddPressed( !props.wordAddPressed );};
+            props.setWordAddPressed( !props.wordAddPressed );
+            alert('слово добавлено в конец списка');};
     };
 
     const handleWordInputs = e => {
@@ -132,7 +137,11 @@ export default function WordAddingForm( props ) {
     };
 
     return(
-        <>
+        <>           
+            <CSSTransition in = { isLoading } timeout = {1000} classNames = "Loader" mountOnEnter unmountOnExit >
+                <Loader/> 
+            </CSSTransition>
+
             <section className = { props.wordAddPressed? 'Word Word__active': 'Word Word__active Word__hidden'} >
                 <div className = "Word__property word-word">
                     <input type = "text" value = { fixedWord.word } 

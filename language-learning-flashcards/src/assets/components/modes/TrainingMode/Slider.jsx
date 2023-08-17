@@ -66,7 +66,6 @@ export default function Slider( props ){
                     <div className = "Slider-frame" style = { { left: offsetLeft + 'vh' } }>
                         { wordsAPI !== undefined&&wordsAPI.length !==0 ?
                             wordsAPI.map(( word, index ) => {
-                                console.log('data');
                                 return (<WordCard key = { word.id } 
                                     word = { word.english }
                                     transcription = { word.transcription }

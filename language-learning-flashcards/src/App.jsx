@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
 
 import Header from './assets/components/Header';
 import AllTheWords from './assets/components/modes/AllTheWords/AllTheWords';
@@ -9,6 +10,7 @@ import NotFoundPage from './assets/components/NotFoundPage';
 import WordsContext from './assets/providers/WordsContext';
 
 import './App.css';
+import Loader from './assets/components/Loader';
 
 
 function App() {
@@ -26,34 +28,39 @@ function App() {
                 }})
             .then( response  => {
                 setWordsAPI( response );
-                setIsLoading( false );}
+                setTimeout( () => setIsLoading( false ), 700 );
+            }
             )
             .catch( error => {
                 setError( error );
-                setIsLoading( false );
+                setTimeout( () => setIsLoading( false ), 700 );
             });
     }, []);
 
     // if( error ){
     //     return <h1>{error.message}</h1>
     // }
-    // if( isLoading ){
-    //     return <h1>Выполняется загрузка...</h1>
-    // }
+
     return (
-        <WordsContext.Provider value = {[ wordsAPI, setWordsAPI ]}>
-            <div className = "App">
-                <Router>
-                    <Header/>
-                    <Routes>
-                        <Route path = "/" element = { <SettingMode/>}/>
-                        <Route path = "/words" element = { <AllTheWords/> }/>
-                        <Route path = "/game" element = { <TrainingMode/> }/>
-                        <Route path = "*" element = { <NotFoundPage/> }/>
-                    </Routes>
-                </Router>
-            </div>
-        </WordsContext.Provider>
+        <>
+            <CSSTransition in = { isLoading } timeout = {1000} classNames = "Loader" mountOnEnter unmountOnExit >
+                <Loader/> 
+            </CSSTransition>
+
+            <WordsContext.Provider value = {[ wordsAPI, setWordsAPI, isLoading, setIsLoading ]}>
+                <div className = "App">
+                    <Router>
+                        <Header/>
+                        <Routes>
+                            <Route path = "/" element = { <SettingMode/>}/>
+                            <Route path = "/words" element = { <AllTheWords/> }/>
+                            <Route path = "/game" element = { <TrainingMode/> }/>
+                            <Route path = "*" element = { <NotFoundPage/> }/>
+                        </Routes>
+                    </Router>
+                </div>
+            </WordsContext.Provider>
+        </>
     );
 }
 

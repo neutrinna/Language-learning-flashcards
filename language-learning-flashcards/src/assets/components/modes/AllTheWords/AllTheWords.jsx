@@ -39,7 +39,8 @@ export default function AllTheWords(){
                                 key = { word.id }
                                 word = { word.english }
                                 transcription = { word.transcription }
-                                translation = { word.russian }/>
+                                translation = { word.russian }
+                                id = { word.id }/>
                         );
                     }):
                     data.map(( word, index ) => {

@@ -44,11 +44,10 @@ export default function WordAddingForm( props ) {
     const [ fixedWord, setFixedWord ] = useState( defaultInputs );
     const [ inputMistakes, setInputMistakes ] = useState( defaultMistakes );
     const [ savePressed, setSavePressed ] = useState( 0 );
-    const [ wordsAPI, setWordsAPI, isLoading, setIsLoading ] = useContext( WordsContext );
+    const [ refreshWordsAPI, setIsLoading ] = useContext( WordsContext );
     const [ error, setError ] = useState( {} );
     const accordeonWord = useRef();
 
-    setIsLoading(true);
     const checkInputsValidation = ( e ) => {
         const name = e.target.name;
         let regexp;
@@ -90,34 +89,20 @@ export default function WordAddingForm( props ) {
             })
                 .then( response => response.json() )
                 .then( newWord => {
-                    console.log( newWord );
+                    // eslint-disable-next-line no-console
+                    console.log( 'word saved', newWord );
                     setTimeout( () => setIsLoading( false ), 700 );
                 })
                 .catch( error => { console.log( `Ошибка отправки слова на сервер: ${error}`);
                     setTimeout( () => setIsLoading( false ), 700 );
                 });
-            
-            fetch( '/api/words' )
-                .then( response => {
-                    if( response.ok ){
-                        return response.json();
-                    } else{
-                        throw new Error( 'Ошибка в выполнении запроса к серверу' );
-                    }})
-                .then( response  => {
-                    setWordsAPI( response );
-                    setTimeout( () => setIsLoading( false ), 700 );})
-                .catch( error => {
-                    setError( error );
-                    setTimeout( () => setIsLoading( false ), 700 );
-                });
-            // eslint-disable-next-line no-console
-            console.log( 'word saved', fixedWord );
-        
+
+            refreshWordsAPI();
+
             setFixedWord( defaultInputs );
             props.setWordAddPressed( !props.wordAddPressed );
-            alert('слово добавлено в конец списка');};
-    };
+            // alert('слово добавлено в конец списка');
+        };};
 
     const handleWordInputs = e => {
         if(e.target.value === '') {
@@ -138,10 +123,6 @@ export default function WordAddingForm( props ) {
 
     return(
         <>           
-            <CSSTransition in = { isLoading } timeout = {1000} classNames = "Loader" mountOnEnter unmountOnExit >
-                <Loader/> 
-            </CSSTransition>
-
             <section className = { props.wordAddPressed? 'Word Word__active': 'Word Word__active Word__hidden'} >
                 <div className = "Word__property word-word">
                     <input type = "text" value = { fixedWord.word } 

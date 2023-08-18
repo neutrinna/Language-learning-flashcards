@@ -21,7 +21,7 @@ export default function Slider( props ){
     const ref = useRef();
 
     const offsetBack = () => {
-        if( !(wordsAPI === undefined&&wordsAPI.length===0) ) cardsArrLength = data.length;
+        if( wordsAPI === undefined&&wordsAPI.length===0 ) cardsArrLength = data.length;
         offset -= 67;
 
         if ( offset < 0 ) {
@@ -32,7 +32,7 @@ export default function Slider( props ){
     };
 
     const offsetNext = () => {
-        if( !(wordsAPI === undefined&&wordsAPI.length===0) ) cardsArrLength = data.length;
+        if( wordsAPI === undefined&&wordsAPI.length===0 ) cardsArrLength = data.length;
         offset += 67;
 
         if ( offset > 67 * ( cardsArrLength-1 )) {

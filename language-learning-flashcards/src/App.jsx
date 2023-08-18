@@ -18,7 +18,7 @@ function App() {
     const [ isLoading, setIsLoading ] = useState( true );
     const [ error, setError ] = useState( {} );
 
-    useEffect(() => {
+    const refreshWordsAPI = () => {
         fetch( '/api/words' )
             .then( response => {
                 if( response.ok ){
@@ -29,13 +29,14 @@ function App() {
             .then( response  => {
                 setWordsAPI( response );
                 setTimeout( () => setIsLoading( false ), 700 );
+                console.log( response );
             }
             )
             .catch( error => {
                 setError( error );
                 setTimeout( () => setIsLoading( false ), 700 );
             });
-    }, []);
+    };
 
     // if( error ){
     //     return <h1>{error.message}</h1>
@@ -47,7 +48,7 @@ function App() {
                 <Loader/> 
             </CSSTransition>
 
-            <WordsContext.Provider value = {[ wordsAPI, setWordsAPI, isLoading, setIsLoading ]}>
+            <WordsContext.Provider value = {[ wordsAPI, setWordsAPI, refreshWordsAPI, isLoading, setIsLoading ]}>
                 <div className = "App">
                     <Router>
                         <Header/>

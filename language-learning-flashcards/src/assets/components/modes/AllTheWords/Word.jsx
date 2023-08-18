@@ -1,9 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
+
+import WordsContext from '../../../providers/WordsContext';
 
 import ButtonSave from './ButtonSave';
 import ButtonEdit from './ButtonEdit';
 import ButtonDelete from './ButtonDelete';
 import ButtonCancel from './ButtonCancel';
+
+
 
 import './Word.scss';
 
@@ -46,6 +50,7 @@ export default function Word( props ) {
     const [ savePressed, setSavePressed ] = useState( 0 );
     const [ isDeleted, setIsDeleted ] = useState( false );
     const accordeonWord = useRef();
+    const [ setIsLoading ] = useContext( WordsContext );
 
     const checkInputsValidation = ( e ) => {
         const name = e.target.name;
@@ -70,14 +75,19 @@ export default function Word( props ) {
     const changeButtonsState = () => {
         setButtonState( false );
     };
+
     const saveChanges = () => {
         setSavePressed( prevState => prevState + 1 );
         if(!Object.values( inputMistakes ).join('')) {
 
+            // setIsLoading( true );
+
             const changedWord = {
                 english: fixedWord.word,
                 transcription: fixedWord.transcription,
-                russian: fixedWord.translation
+                russian: fixedWord.translation,
+                tags: '',
+                tags_json: []
             };
 
             fetch( `api/words/${props.id}/update`, {
@@ -90,8 +100,12 @@ export default function Word( props ) {
                 .then( response => response.json() )
                 .then( changedWord => {
                     console.log( changedWord );
+                    // setTimeout( () => setIsLoading( false ), 700 );
                 })
-                .catch( error => console.log( `Ошибка отправки слова на сервер: ${error}` ));
+                .catch( error => {console.log( `Ошибка отправки слова на сервер: ${error}`);
+                    setTimeout( () => setIsLoading( false ), 700 );});
+            
+            // refreshWordsAPI();
 
             setButtonState( true );
             setSavePressed( 0 );
@@ -131,10 +145,11 @@ export default function Word( props ) {
                 <div className = "Word__property">{ fixedWord.translation }</div>
                 <div className = "Word__options">
                     <ButtonEdit onClick = { changeButtonsState }/>
-                    <ButtonDelete id = { props.id } setIsDeleted = { setIsDeleted }/>
+                    <ButtonDelete id = { props.id } 
+                        setIsDeleted = { setIsDeleted }
+                        deleteWord = { props.deleteWord }/>
                 </div>
             </section>
-            
             : <>
                 <section className = { isDeleted?'Word Word__active Word__hidden': 'Word Word__active'} >
                     <div className = "Word__property word-word">
@@ -152,7 +167,9 @@ export default function Word( props ) {
                     <div className = "Word__options">
                         <ButtonCancel onClickCancel = { resetChanges }/>
                         <ButtonSave onClickSave = { saveChanges } absentInput = { absentInput }/>
-                        <ButtonDelete id = { props.id } setIsDeleted = { setIsDeleted }/>
+                        <ButtonDelete id = { props.id } 
+                            setIsDeleted = { setIsDeleted }
+                            deleteWord = { props.deleteWord }/>
                     </div>
                 </section>
                 {<div className = {(savePressed>0)&&Object.values( inputMistakes ).join('')?

@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Language-learning-flashcards/static/css/main.e45fa837.css",
-    "main.js": "/Language-learning-flashcards/static/js/main.3f88e047.js",
+    "main.js": "/Language-learning-flashcards/static/js/main.c26467ae.js",
     "static/media/Montserrat-Regular.ttf": "/Language-learning-flashcards/static/media/Montserrat-Regular.ceb11275ab638627a643.ttf",
     "static/media/ArchivoBlack-Regular.ttf": "/Language-learning-flashcards/static/media/ArchivoBlack-Regular.e35d38651492de9e7226.ttf",
     "static/media/page.png": "/Language-learning-flashcards/static/media/page.cde6b7813c41f1d8cafa.png",
@@ -18,10 +18,10 @@
     "static/media/arrow-forward.svg": "/Language-learning-flashcards/static/media/arrow-forward.b70b257eb0a1c65e6734f3028e783fb0.svg",
     "static/media/arrow-back.svg": "/Language-learning-flashcards/static/media/arrow-back.c00b62c530898547d93758f8bf17cd89.svg",
     "main.e45fa837.css.map": "/Language-learning-flashcards/static/css/main.e45fa837.css.map",
-    "main.3f88e047.js.map": "/Language-learning-flashcards/static/js/main.3f88e047.js.map"
+    "main.c26467ae.js.map": "/Language-learning-flashcards/static/js/main.c26467ae.js.map"
   },
   "entrypoints": [
     "static/css/main.e45fa837.css",
-    "static/js/main.3f88e047.js"
+    "static/js/main.c26467ae.js"
   ]
 }

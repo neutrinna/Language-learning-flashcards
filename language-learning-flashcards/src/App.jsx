@@ -46,7 +46,7 @@ function App() {
     useEffect( () => {
         refreshWordsAPI();
     }, [ needRefresh ] );
-    console.log(error);
+
     if( error ){
         return <Error name = { error.name } message = { error.message }/>;
     }

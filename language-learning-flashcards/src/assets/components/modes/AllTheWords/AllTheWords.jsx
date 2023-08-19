@@ -1,40 +1,82 @@
-import React, { useContext, useState } from 'react';
-
-import WordsContext from '../../../providers/WordsContext';
+import React, { useContext, useState, useEffect } from 'react';
 
 import data from '../../../data/colors.json';
+import WordsContext from '../../../providers/WordsContext';
 
-import Word from './Word';
-
-import './AllTheWords.scss';
 import WordAddingForm from './WordAddingForm';
-
+import Word from './Word';
+import './AllTheWords.scss';
 
 export default function AllTheWords(){
-    const [ wordsAPI, refreshWordsAPI ] = useContext( WordsContext );
+    const [ wordsAPI, needRefresh, setNeedRefresh, loaderCB ] = useContext( WordsContext );
     const [ wordAddPressed, setWordAddPressed ] = useState( false );
+
+    useEffect( () => {
+        setNeedRefresh( !needRefresh );
+    }, [] );
 
     const handleButtonPressed = () => {
         setWordAddPressed( !wordAddPressed );
     };
 
     const deleteWord = ( e, id ) => {
+        fetch( `api/words/${id}/delete`, {
+            method: 'POST',
+            body: JSON.stringify( '' ),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        })
+            .then( response => response.json() )
+            .then( response => {
+                // eslint-disable-next-line no-console
+                console.log( response );
+            })
+            // eslint-disable-next-line no-console
+            .catch( error => console.log( `Ошибка удаления слова: ${error}` ));
+    };
 
-        // fetch( `api/words/${id}/delete`, {
-        //     method: 'POST',
-        //     body: JSON.stringify( '' ),
-        //     headers: {
-        //         'Content-type': 'application/json; charset=UTF-8'
-        //     }
-        // })
-        //     .then( response => response.json() )
-        //     .then( response => {
-        //         console.log( response );
-        //     })
-        //     .catch( error => console.log( `Ошибка отправки слова на сервер: ${error}` ));
+    const changeWord = ( e, id, changedWord ) => {
+        fetch( `api/words/${id}/update`, {
+            method: 'POST',
+            body: JSON.stringify( changedWord ),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        })
+            .then( response => response.json() )
+            .then( changedWord => {
+                // eslint-disable-next-line no-console
+                console.log( changedWord );
+            })
+            // eslint-disable-next-line no-console
+            .catch( error => console.log( `Ошибка отправки слова на сервер: ${error}`));
+    };
 
-        refreshWordsAPI();
+    const saveNewWord = ( e, newWord ) => {
 
+        loaderCB( true );
+        
+        fetch( 'api/words/add', {
+            method: 'POST',
+            body: JSON.stringify( newWord ),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        })
+            .then( response => response.json() )
+            .then( newWord => {
+                // eslint-disable-next-line no-console
+                console.log( 'word saved', newWord );
+                setTimeout( () => loaderCB( false ), 500 );
+            })
+            .catch( error => { 
+                // eslint-disable-next-line no-console
+                console.log( `Ошибка отправки слова на сервер: ${error}`);
+                setTimeout( () => loaderCB( false ), 500 );
+            });
+
+        setNeedRefresh( !needRefresh );
     };
 
     return(
@@ -50,8 +92,10 @@ export default function AllTheWords(){
                 transcription = { '' }
                 translation = { '' }
                 wordAddPressed = { wordAddPressed }
-                setWordAddPressed = { setWordAddPressed }/>
-            }
+                setWordAddPressed = { setWordAddPressed }
+                saveNewWord = { saveNewWord }/>
+            } 
+
             { 
                 ( wordsAPI !== undefined&&wordsAPI.length !== 0 )?
                     wordsAPI.map(( word ) => {
@@ -62,7 +106,8 @@ export default function AllTheWords(){
                                 transcription = { word.transcription }
                                 translation = { word.russian }
                                 id = { word.id }
-                                deleteWord = { deleteWord }/>
+                                deleteWord = { deleteWord }
+                                changeWord = { changeWord }/>
                         );
                     }):
                     data.map(( word, index ) => {

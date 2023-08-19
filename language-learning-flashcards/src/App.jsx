@@ -8,6 +8,7 @@ import SettingMode from './assets/components/modes/SettingMode/SettingMode';
 import TrainingMode from './assets/components/modes/TrainingMode/TrainingMode';
 import NotFoundPage from './assets/components/NotFoundPage';
 import WordsContext from './assets/providers/WordsContext';
+import Error from './assets/components/Error';
 
 import './App.css';
 import Loader from './assets/components/Loader';
@@ -16,7 +17,8 @@ import Loader from './assets/components/Loader';
 function App() {
     const [ wordsAPI, setWordsAPI ] = useState( [] );
     const [ isLoading, setIsLoading ] = useState( true );
-    const [ error, setError ] = useState( {} );
+    const [ error, setError ] = useState();
+    const [ needRefresh, setNeedRefresh ] = useState( false );
 
     const refreshWordsAPI = () => {
         fetch( '/api/words' )
@@ -28,19 +30,26 @@ function App() {
                 }})
             .then( response  => {
                 setWordsAPI( response );
-                setTimeout( () => setIsLoading( false ), 700 );
-                console.log( response );
+                setTimeout( () => setIsLoading( false ), 500 );
             }
             )
             .catch( error => {
                 setError( error );
-                setTimeout( () => setIsLoading( false ), 700 );
+                setTimeout( () => setIsLoading( false ), 500 );
             });
     };
 
-    // if( error ){
-    //     return <h1>{error.message}</h1>
-    // }
+    const loaderCB = param => {
+        setIsLoading( param );
+    };
+
+    useEffect( () => {
+        refreshWordsAPI();
+    }, [ needRefresh ] );
+    console.log(error);
+    if( error ){
+        return <Error name = { error.name } message = { error.message }/>;
+    }
 
     return (
         <>
@@ -48,7 +57,7 @@ function App() {
                 <Loader/> 
             </CSSTransition>
 
-            <WordsContext.Provider value = {[ wordsAPI, setWordsAPI, refreshWordsAPI, isLoading, setIsLoading ]}>
+            <WordsContext.Provider value = {[ wordsAPI, needRefresh, setNeedRefresh, loaderCB ]}>
                 <div className = "App">
                     <Router>
                         <Header/>

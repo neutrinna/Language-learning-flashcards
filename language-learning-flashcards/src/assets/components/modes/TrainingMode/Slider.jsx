@@ -10,16 +10,19 @@ import WordCard from './WordCard';
 import './Slider.scss';
 
 let offset = 0;
-// let currentLearnedWordsCount = sessionStorage.getItem( 'currentLearnedWordsCount' ) || 0;
 
 export default function Slider( props ){
     const [ offsetLeft, setOffset ] = useState( 0 );
     const [ cardIndex, setCardIndex ] = useState( 0 );
     const [ learnedWords, setLearnedWords ] = useState ( 0 );
-    const [ wordsAPI ] = useContext( WordsContext );
+    const [ wordsAPI, needRefresh, setNeedRefresh ] = useContext( WordsContext );
     let cardsArrLength = wordsAPI.length;
     const ref = useRef();
 
+    useEffect( () => {
+        setNeedRefresh( !needRefresh );
+    }, [] );
+    
     const offsetBack = () => {
         if( wordsAPI === undefined&&wordsAPI.length===0 ) cardsArrLength = data.length;
         offset -= 67;
@@ -46,8 +49,8 @@ export default function Slider( props ){
         let currentLearnedWordsCount = learnedWords;
         currentLearnedWordsCount += 1;
         setLearnedWords( currentLearnedWordsCount );
+        // eslint-disable-next-line no-console
         console.log( `Изучено слов: ${currentLearnedWordsCount}` );
-        // sessionStorage.setItem( 'currentLearnedWordsCount', currentLearnedWordsCount );
     };
 
     // const setFocus = () => {

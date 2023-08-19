@@ -1,8 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
-import { CSSTransition } from 'react-transition-group';
-
-import WordsContext from '../../../providers/WordsContext';
-import Loader from '../../Loader';
+import React, { useState, useRef } from 'react';
 
 import ButtonSave from './ButtonSave';
 
@@ -31,7 +27,7 @@ const mistakesText = {
 const reWord = /[^a-zA-Z]+/;
 const reTranscription = /[\d\s]+/;
 // const reTranscription = /[^a-zA-Z\ː\:ıæɒɔɜəʌʋʃʒŋθð\[\]]+/;
-const reTranslation = /[^а-яА-ЯёЁ\,\/]+/;
+const reTranslation = /[^а-яА-ЯёЁ,/]+/;
 
 export default function WordAddingForm( props ) {
     const defaultInputs = {
@@ -44,8 +40,6 @@ export default function WordAddingForm( props ) {
     const [ fixedWord, setFixedWord ] = useState( defaultInputs );
     const [ inputMistakes, setInputMistakes ] = useState( defaultMistakes );
     const [ savePressed, setSavePressed ] = useState( 0 );
-    const [ refreshWordsAPI, setIsLoading ] = useContext( WordsContext );
-    const [ error, setError ] = useState( {} );
     const accordeonWord = useRef();
 
     const checkInputsValidation = ( e ) => {
@@ -68,10 +62,9 @@ export default function WordAddingForm( props ) {
             :setInputMistakes({ ...inputMistakes, [ name ]:'' });
     };
 
-    const saveChanges = () => {
+    const saveChanges = e => {
         setSavePressed( prevState => prevState + 1 );
         if(!Object.values( inputMistakes ).join('')) {
-            setIsLoading( true );
             setSavePressed( 0 );
             
             const newWord = {
@@ -80,25 +73,7 @@ export default function WordAddingForm( props ) {
                 russian: fixedWord.translation
             };
 
-            fetch( 'api/words/add', {
-                method: 'POST',
-                body: JSON.stringify( newWord ),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8'
-                }
-            })
-                .then( response => response.json() )
-                .then( newWord => {
-                    // eslint-disable-next-line no-console
-                    console.log( 'word saved', newWord );
-                    setTimeout( () => setIsLoading( false ), 700 );
-                })
-                .catch( error => { console.log( `Ошибка отправки слова на сервер: ${error}`);
-                    setTimeout( () => setIsLoading( false ), 700 );
-                });
-
-            refreshWordsAPI();
-
+            props.saveNewWord( e.target, newWord );
             setFixedWord( defaultInputs );
             props.setWordAddPressed( !props.wordAddPressed );
             // alert('слово добавлено в конец списка');

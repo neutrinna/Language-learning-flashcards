@@ -1,13 +1,9 @@
-import React, { useState, useRef, useContext } from 'react';
-
-import WordsContext from '../../../providers/WordsContext';
+import React, { useState, useRef } from 'react';
 
 import ButtonSave from './ButtonSave';
 import ButtonEdit from './ButtonEdit';
 import ButtonDelete from './ButtonDelete';
 import ButtonCancel from './ButtonCancel';
-
-
 
 import './Word.scss';
 
@@ -34,7 +30,7 @@ const mistakesText = {
 const reWord = /[^a-zA-Z]+/;
 const reTranscription = /[\d\s]+/;
 // const reTranscription = /[^a-zA-Z\ː\:ıæɒɔɜəʌʋʃʒŋθð\[\]]+/;
-const reTranslation = /[^а-яА-ЯёЁ\,\/]+/;
+const reTranslation = /[^а-яА-ЯёЁ,/]+/;
 
 export default function Word( props ) {
     const defaultWord = {
@@ -50,7 +46,6 @@ export default function Word( props ) {
     const [ savePressed, setSavePressed ] = useState( 0 );
     const [ isDeleted, setIsDeleted ] = useState( false );
     const accordeonWord = useRef();
-    const [ setIsLoading ] = useContext( WordsContext );
 
     const checkInputsValidation = ( e ) => {
         const name = e.target.name;
@@ -76,11 +71,9 @@ export default function Word( props ) {
         setButtonState( false );
     };
 
-    const saveChanges = () => {
+    const saveChanges = e => {
         setSavePressed( prevState => prevState + 1 );
         if(!Object.values( inputMistakes ).join('')) {
-
-            // setIsLoading( true );
 
             const changedWord = {
                 english: fixedWord.word,
@@ -90,22 +83,7 @@ export default function Word( props ) {
                 tags_json: []
             };
 
-            fetch( `api/words/${props.id}/update`, {
-                method: 'POST',
-                body: JSON.stringify( changedWord ),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8'
-                }
-            })
-                .then( response => response.json() )
-                .then( changedWord => {
-                    console.log( changedWord );
-                    // setTimeout( () => setIsLoading( false ), 700 );
-                })
-                .catch( error => {console.log( `Ошибка отправки слова на сервер: ${error}`);
-                    setTimeout( () => setIsLoading( false ), 700 );});
-            
-            // refreshWordsAPI();
+            props.changeWord( e.target, props.id, changedWord );
 
             setButtonState( true );
             setSavePressed( 0 );

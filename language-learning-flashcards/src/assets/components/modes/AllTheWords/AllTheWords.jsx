@@ -19,7 +19,7 @@ export default function AllTheWords(){
         setWordAddPressed( !wordAddPressed );
     };
 
-    const deleteWord = ( e, id ) => {
+    const deleteWord = id => {
         fetch( `api/words/${id}/delete`, {
             method: 'POST',
             body: JSON.stringify( '' ),
@@ -36,7 +36,7 @@ export default function AllTheWords(){
             .catch( error => console.log( `Ошибка удаления слова: ${error}` ));
     };
 
-    const changeWord = ( e, id, changedWord ) => {
+    const changeWord = ( id, changedWord ) => {
         fetch( `api/words/${id}/update`, {
             method: 'POST',
             body: JSON.stringify( changedWord ),
@@ -53,28 +53,28 @@ export default function AllTheWords(){
             .catch( error => console.log( `Ошибка отправки слова на сервер: ${error}`));
     };
 
-    const saveNewWord = ( e, newWord ) => {
+    const saveNewWord = async newWord => {
 
         loaderCB( true );
         
-        fetch( 'api/words/add', {
-            method: 'POST',
-            body: JSON.stringify( newWord ),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
-            }
-        })
-            .then( response => response.json() )
-            .then( newWord => {
-                // eslint-disable-next-line no-console
-                console.log( 'word saved', newWord );
-                setTimeout( () => loaderCB( false ), 500 );
-            })
-            .catch( error => { 
-                // eslint-disable-next-line no-console
-                console.log( `Ошибка отправки слова на сервер: ${error}`);
-                setTimeout( () => loaderCB( false ), 500 );
+        try{
+            const response = await fetch( 'api/words/add', {
+                method: 'POST',
+                body: JSON.stringify( newWord ),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                }
             });
+            const data = await response.json();
+            // eslint-disable-next-line no-console
+            console.log( 'word saved', data );
+            setTimeout( () => loaderCB( false ), 500 );
+        }
+        catch( error ){ 
+            // eslint-disable-next-line no-console
+            console.log( `Ошибка отправки слова на сервер: ${error}`);
+            setTimeout( () => loaderCB( false ), 500 );
+        };
 
         setNeedRefresh( !needRefresh );
     };

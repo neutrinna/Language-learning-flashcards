@@ -6,9 +6,9 @@ import './ButtonDelete.scss';
 
 export default function ButtonDelete( props ){
 
-    const handleClick =  e => {
+    const handleClick =  () => {
         props.setIsDeleted( true );
-        props.deleteWord( e.target, props.id );
+        props.deleteWord( props.id );
     };
 
     return(

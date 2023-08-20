@@ -62,7 +62,7 @@ export default function WordAddingForm( props ) {
             :setInputMistakes({ ...inputMistakes, [ name ]:'' });
     };
 
-    const saveChanges = e => {
+    const saveChanges = () => {
         setSavePressed( prevState => prevState + 1 );
         if(!Object.values( inputMistakes ).join('')) {
             setSavePressed( 0 );
@@ -73,7 +73,7 @@ export default function WordAddingForm( props ) {
                 russian: fixedWord.translation
             };
 
-            props.saveNewWord( e.target, newWord );
+            props.saveNewWord( newWord );
             setFixedWord( defaultInputs );
             props.setWordAddPressed( !props.wordAddPressed );
             // alert('слово добавлено в конец списка');

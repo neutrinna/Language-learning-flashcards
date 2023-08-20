@@ -71,7 +71,7 @@ export default function Word( props ) {
         setButtonState( false );
     };
 
-    const saveChanges = e => {
+    const saveChanges = () => {
         setSavePressed( prevState => prevState + 1 );
         if(!Object.values( inputMistakes ).join('')) {
 
@@ -83,7 +83,7 @@ export default function Word( props ) {
                 tags_json: []
             };
 
-            props.changeWord( e.target, props.id, changedWord );
+            props.changeWord( props.id, changedWord );
 
             setButtonState( true );
             setSavePressed( 0 );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { CSSTransition } from 'react-transition-group';
@@ -13,21 +13,23 @@ import Loader from './assets/components/Loader';
 import Error from './assets/components/Error';
 
 import './App.css';
-import Loader from './assets/components/Loader';
-
 
 const wordsStore = new WordsStore();
 
 const App = observer( () => {
+    useEffect(() => { wordsStore.refreshWordsAPI(); },
+        []);
+
     // if( wordsStore.error ){
     //     return <Error name = { wordsStore.error.name } message = { wordsStore.error.message }/>;
     // }
+
     return (
         <>
-            <CSSTransition in = { wordsStore.isLoading }
+            {/* <CSSTransition in = { wordsStore.isLoading }
                 timeout = {1000} classNames = "Loader" mountOnEnter unmountOnExit >
                 <Loader/> 
-            </CSSTransition>
+            </CSSTransition> */}
 
             <div className = "App">
                 <Router>

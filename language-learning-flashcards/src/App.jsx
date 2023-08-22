@@ -13,6 +13,8 @@ import Loader from './assets/components/Loader';
 import Error from './assets/components/Error';
 
 import './App.css';
+import Loader from './assets/components/Loader';
+
 
 const wordsStore = new WordsStore();
 

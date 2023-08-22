@@ -30,7 +30,7 @@ const mistakesText = {
 const reWord = /[^a-zA-Z]+/;
 const reTranscription = /[\d\s]+/;
 // const reTranscription = /[^a-zA-Z\ː\:ıæɒɔɜəʌʋʃʒŋθð\[\]]+/;
-const reTranslation = /[^а-яА-ЯёЁ]+/;
+const reTranslation = /[^а-яА-ЯёЁ,/]+/;
 
 export default function Word( props ) {
     const defaultWord = {
@@ -44,6 +44,7 @@ export default function Word( props ) {
     const [ fixedWord, setFixedWord ] = useState( defaultWord );
     const [ inputMistakes, setInputMistakes ] = useState( defaultMistakes );
     const [ savePressed, setSavePressed ] = useState( 0 );
+    const [ isDeleted, setIsDeleted ] = useState( false );
     const accordeonWord = useRef();
 
     const checkInputsValidation = ( e ) => {
@@ -69,13 +70,25 @@ export default function Word( props ) {
     const changeButtonsState = () => {
         setButtonState( false );
     };
+
     const saveChanges = () => {
         setSavePressed( prevState => prevState + 1 );
         if(!Object.values( inputMistakes ).join('')) {
+
+            const changedWord = {
+                english: fixedWord.word,
+                transcription: fixedWord.transcription,
+                russian: fixedWord.translation,
+                tags: '',
+                tags_json: []
+            };
+
+            props.changeWord( props.id, changedWord );
+
             setButtonState( true );
             setSavePressed( 0 );
             // eslint-disable-next-line no-console
-            console.log( 'word saved', fixedWord );}
+            console.log( 'word saved', changedWord );}
     };
 
     const resetChanges = () => {
@@ -104,18 +117,19 @@ export default function Word( props ) {
 
     return(
         buttonsState?
-            <section className = "Word" >
+            <section className = { isDeleted? 'Word Word__hidden': 'Word'} >
                 <div className = "Word__property">{ fixedWord.word }</div>
                 <div className = "Word__property">{ fixedWord.transcription }</div>
                 <div className = "Word__property">{ fixedWord.translation }</div>
                 <div className = "Word__options">
                     <ButtonEdit onClick = { changeButtonsState }/>
-                    <ButtonDelete/>
+                    <ButtonDelete id = { props.id } 
+                        setIsDeleted = { setIsDeleted }
+                        deleteWord = { props.deleteWord }/>
                 </div>
             </section>
-            
             : <>
-                <section className = "Word Word__active" >
+                <section className = { isDeleted?'Word Word__active Word__hidden': 'Word Word__active'} >
                     <div className = "Word__property word-word">
                         <input type = "text" value = { fixedWord.word } 
                             name = "word" onChange = { handleWordInputs }/>
@@ -131,7 +145,9 @@ export default function Word( props ) {
                     <div className = "Word__options">
                         <ButtonCancel onClickCancel = { resetChanges }/>
                         <ButtonSave onClickSave = { saveChanges } absentInput = { absentInput }/>
-                        <ButtonDelete/>
+                        <ButtonDelete id = { props.id } 
+                            setIsDeleted = { setIsDeleted }
+                            deleteWord = { props.deleteWord }/>
                     </div>
                 </section>
                 {<div className = {(savePressed>0)&&Object.values( inputMistakes ).join('')?

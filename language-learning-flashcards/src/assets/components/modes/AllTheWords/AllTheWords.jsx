@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 import data from '../../../data/colors.json';
 
@@ -6,7 +7,7 @@ import Word from './Word';
 
 import './AllTheWords.scss';
 
-export default function AllTheWords(){
+const AllTheWords = observer( () => {
     return(
         <main className="AllTheWords">
             <div className="AllTheWords__title">
@@ -24,4 +25,6 @@ export default function AllTheWords(){
             }
         </main>
     );
-}
+})
+
+export default AllTheWords;

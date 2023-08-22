@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 
 export default class WordsStore {
     wordsAPI = [];
@@ -13,14 +13,15 @@ export default class WordsStore {
         fetch( '/api/words' )
             .then( response => {
                 if( response.ok ){
-                    console.log(response);
-                    console.log(response.json());
+                    // console.log(response);
+                    // console.log(response.json());
                     return response.json();
                 } else{
                     throw new Error( 'Ошибка в выполнении запроса к серверу' );
                 }})
             .then( response => {
-                console.log(response);
+                response.json();
+                console.log(response.json());
                 this.wordsAPI = response;
                 setTimeout( () => this.isLoading = false, 500 );})
             .catch( error => { 

@@ -1,30 +1,31 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 
 import data from '../../../data/colors.json';
 import arrowBack from '../../../images/arrow-back.svg';
 import arrowForward from '../../../images/arrow-forward.svg';
-import WordsContext from '../../../providers/WordsContext';
+import WordsStore from '../../../stores/WordsStore';
 
 import WordCard from './WordCard';
 
 import './Slider.scss';
 
+const wordsStore = new WordsStore();
 let offset = 0;
 
-export default function Slider( props ){
+const Slider = observer(( props ) => {
     const [ offsetLeft, setOffset ] = useState( 0 );
     const [ cardIndex, setCardIndex ] = useState( 0 );
     const [ learnedWords, setLearnedWords ] = useState ( 0 );
-    const [ wordsAPI, needRefresh, setNeedRefresh ] = useContext( WordsContext );
-    let cardsArrLength = wordsAPI.length;
+    let cardsArrLength = wordsStore.wordsAPI.length;
     const ref = useRef();
 
     useEffect( () => {
-        setNeedRefresh( !needRefresh );
+        wordsStore.refreshWordsAPI();
     }, [] );
     
     const offsetBack = () => {
-        if( wordsAPI === undefined&&wordsAPI.length===0 ) cardsArrLength = data.length;
+        if( wordsStore.wordsAPI === undefined&&wordsStore.wordsAPI.length===0 ) cardsArrLength = data.length;
         offset -= 67;
 
         if ( offset < 0 ) {
@@ -35,7 +36,7 @@ export default function Slider( props ){
     };
 
     const offsetNext = () => {
-        if( wordsAPI === undefined&&wordsAPI.length===0 ) cardsArrLength = data.length;
+        if( wordsStore.wordsAPI === undefined&&wordsStore.wordsAPI.length===0 ) cardsArrLength = data.length;
         offset += 67;
 
         if ( offset > 67 * ( cardsArrLength-1 )) {
@@ -67,8 +68,8 @@ export default function Slider( props ){
             <div className ="Slider-wrapper">
                 <div className = "Slider-line">
                     <div className = "Slider-frame" style = { { left: offsetLeft + 'vh' } }>
-                        { wordsAPI !== undefined&&wordsAPI.length !==0 ?
-                            wordsAPI.map(( word, index ) => {
+                        { wordsStore.wordsAPI !== undefined&&wordsStore.wordsAPI.length !==0 ?
+                            wordsStore.wordsAPI.map(( word, index ) => {
                                 return (<WordCard key = { word.id } 
                                     word = { word.english }
                                     transcription = { word.transcription }
@@ -87,9 +88,11 @@ export default function Slider( props ){
             <img src = { arrowForward } alt = "Стрелка вперед" className = "buttons-slider" onClick = { offsetNext }/>
         </div>
     );
-}
+})
 
 WordCard.defaultProps = {
     word: data.word,
     translate: data.translation
 };
+
+export default Slider;

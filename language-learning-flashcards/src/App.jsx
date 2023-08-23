@@ -20,16 +20,16 @@ const App = observer( () => {
     useEffect(() => { wordsStore.refreshWordsAPI(); },
         []);
 
-    // if( wordsStore.error ){
-    //     return <Error name = { wordsStore.error.name } message = { wordsStore.error.message }/>;
-    // }
+    if( wordsStore.error ){
+        return <Error name = { wordsStore.error.name } message = { wordsStore.error.message }/>;
+    }
 
     return (
         <>
-            {/* <CSSTransition in = { wordsStore.isLoading }
+            <CSSTransition in = { wordsStore.isLoading }
                 timeout = {1000} classNames = "Loader" mountOnEnter unmountOnExit >
                 <Loader/> 
-            </CSSTransition> */}
+            </CSSTransition>
 
             <div className = "App">
                 <Router>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import data from '../../../data/colors.json';
@@ -11,6 +11,11 @@ import './AllTheWords.scss';
 const wordsStore = new WordsStore();
 
 const AllTheWords = observer( () => {
+
+    useEffect( () => {
+        wordsStore.refreshWordsAPI()
+    }, [])
+
     const [ wordAddPressed, setWordAddPressed ] = useState( false );
 
     const handleButtonPressed = () => {

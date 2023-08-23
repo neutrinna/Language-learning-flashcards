@@ -6,29 +6,28 @@ export default class WordsStore {
     isLoading = true;
 
     constructor(){
-        makeAutoObservable(this);
+        makeAutoObservable( this );
     }
 
     refreshWordsAPI(){
         fetch( '/api/words' )
-            .then( response => {
-                if( response.ok ){
-                    // console.log(response);
-                    // console.log(response.json());
-                    return response.json();
-                } else{
-                    throw new Error( 'Ошибка в выполнении запроса к серверу' );
-                }})
-            .then( response => {
-                response.json();
-                console.log(response.json());
-                this.wordsAPI = response;
-                setTimeout( () => this.isLoading = false, 500 );})
-            .catch( error => { 
-                this.error = error;
-                console.log(error);
-                setTimeout( () => this.isLoading = false, 500 );
-            });
+        .then(response => {
+            if (response.ok) { 
+                return response.json();
+            } else {
+                throw new Error('Something went wrong ...');
+            }
+        })
+        .then( response => {
+            console.log( response );
+            this.wordsAPI = response;
+            setTimeout( () => this.isLoading = false, 500 );
+        })
+        .catch( error => { 
+            this.error = error;
+            console.log(error);
+            setTimeout( () => this.isLoading = false, 500 );
+        });
     }
 }
 

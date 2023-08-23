@@ -6,6 +6,7 @@ import ButtonDelete from './ButtonDelete';
 import ButtonCancel from './ButtonCancel';
 
 import './Word.scss';
+import WordsStore from '../../../stores/WordsStore';
 
 const defaultAbsentInputObj = {
     word: false,
@@ -83,7 +84,7 @@ export default function Word( props ) {
                 tags_json: []
             };
 
-            props.changeWord( props.id, changedWord );
+            props.saveChanges( props.id, changedWord );
 
             setButtonState( true );
             setSavePressed( 0 );

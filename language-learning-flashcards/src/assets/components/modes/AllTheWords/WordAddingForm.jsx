@@ -1,8 +1,12 @@
 import React, { useState, useRef } from 'react';
+import { observer } from 'mobx-react-lite';
 
 import ButtonSave from './ButtonSave';
+import WordsStore from '../../../stores/WordsStore';
 
 import './Word.scss';
+
+const wordsStore = new WordsStore();
 
 const defaultAbsentInputObj = {
     word: true,
@@ -29,7 +33,7 @@ const reTranscription = /[\d\s]+/;
 // const reTranscription = /[^a-zA-Z\ː\:ıæɒɔɜəʌʋʃʒŋθð\[\]]+/;
 const reTranslation = /[^а-яА-ЯёЁ,/]+/;
 
-export default function WordAddingForm( props ) {
+const WordAddingForm = observer(( props ) => {
     const defaultInputs = {
         word: '',
         transcription: '',
@@ -65,6 +69,7 @@ export default function WordAddingForm( props ) {
     const saveChanges = () => {
         setSavePressed( prevState => prevState + 1 );
         if(!Object.values( inputMistakes ).join('')) {
+            wordsStore.setIsLoading( true );
             setSavePressed( 0 );
             
             const newWord = {
@@ -73,7 +78,8 @@ export default function WordAddingForm( props ) {
                 russian: fixedWord.translation
             };
 
-            props.saveNewWord( newWord );
+            wordsStore.addNewWord( newWord );
+            props.setNeedRefresh( !props.needRefresh )
             setFixedWord( defaultInputs );
             props.setWordAddPressed( !props.wordAddPressed );
             // alert('слово добавлено в конец списка');
@@ -97,7 +103,7 @@ export default function WordAddingForm( props ) {
     };
 
     return(
-        <>           
+        <>      
             <section className = { props.wordAddPressed? 'Word Word__active': 'Word Word__active Word__hidden'} >
                 <div className = "Word__property word-word">
                     <input type = "text" value = { fixedWord.word } 
@@ -115,7 +121,7 @@ export default function WordAddingForm( props ) {
                     <ButtonSave onClickSave = { saveChanges } absentInput = { absentInput }/>
                 </div>
             </section>
-            {<div className = {(savePressed>0)&&Object.values( inputMistakes ).join('')?
+            {<div className = {( savePressed>0 )&&Object.values( inputMistakes ).join('')?
                 'Word__warning Word__warning_showed':'Word__warning'}
             ref = { accordeonWord }>
                 { Object.values( inputMistakes ).map (( mistake, index ) => {
@@ -126,5 +132,7 @@ export default function WordAddingForm( props ) {
             </div>}
         </>
     );
-}
+})
+
+export default WordAddingForm
 

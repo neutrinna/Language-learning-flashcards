@@ -10,8 +10,8 @@ import WordCard from './WordCard';
 
 import './Slider.scss';
 
-const wordsStore = new WordsStore();
 let offset = 0;
+const wordsStore = new WordsStore();
 
 const Slider = observer(( props ) => {
     const [ offsetLeft, setOffset ] = useState( 0 );

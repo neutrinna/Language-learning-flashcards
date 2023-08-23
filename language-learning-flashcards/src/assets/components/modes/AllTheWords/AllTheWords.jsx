@@ -11,16 +11,16 @@ import './AllTheWords.scss';
 const wordsStore = new WordsStore();
 
 const AllTheWords = observer( () => {
-
-    useEffect( () => {
-        wordsStore.refreshWordsAPI()
-    }, [])
-
+    const [ needRefresh, setNeedRefresh ] = useState( false )
     const [ wordAddPressed, setWordAddPressed ] = useState( false );
 
     const handleButtonPressed = () => {
         setWordAddPressed( !wordAddPressed );
     };
+
+    useEffect( () => {
+        wordsStore.refreshWordsAPI()
+    }, [ needRefresh ])
 
     return(
         <main className="AllTheWords">
@@ -35,7 +35,9 @@ const AllTheWords = observer( () => {
                 transcription = { '' }
                 translation = { '' }
                 wordAddPressed = { wordAddPressed }
-                setWordAddPressed = { setWordAddPressed }/>
+                setWordAddPressed = { setWordAddPressed }
+                setNeedRefresh = { setNeedRefresh }
+                needRefresh = { needRefresh }/>
             } 
 
             { 
@@ -47,7 +49,9 @@ const AllTheWords = observer( () => {
                                 word = { word.english }
                                 transcription = { word.transcription }
                                 translation = { word.russian }
-                                id = { word.id }/>
+                                id = { word.id }
+                                saveChanges = { wordsStore.saveChanges }
+                                deleteWord = { wordsStore.deleteWord }/>
                         );
                     }):
                     data.map(( word, index ) => {

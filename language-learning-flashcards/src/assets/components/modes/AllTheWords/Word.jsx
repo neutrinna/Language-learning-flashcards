@@ -6,7 +6,6 @@ import ButtonDelete from './ButtonDelete';
 import ButtonCancel from './ButtonCancel';
 
 import './Word.scss';
-import WordsStore from '../../../stores/WordsStore';
 
 const defaultAbsentInputObj = {
     word: false,

@@ -1,26 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import data from '../../../data/colors.json';
-import WordsStore from '../../../stores/WordsStore';
 
 import WordAddingForm from './WordAddingForm';
 import Word from './Word';
 import './AllTheWords.scss';
 
-const wordsStore = new WordsStore();
+const AllTheWords = observer(( props ) => {
+    
+    const wordsStore = props.wordsStore;
 
-const AllTheWords = observer( () => {
-    const [ needRefresh, setNeedRefresh ] = useState( false )
     const [ wordAddPressed, setWordAddPressed ] = useState( false );
 
     const handleButtonPressed = () => {
         setWordAddPressed( !wordAddPressed );
     };
-
-    useEffect( () => {
-        wordsStore.refreshWordsAPI()
-    }, [ needRefresh ])
 
     return(
         <main className="AllTheWords">
@@ -36,8 +31,7 @@ const AllTheWords = observer( () => {
                 translation = { '' }
                 wordAddPressed = { wordAddPressed }
                 setWordAddPressed = { setWordAddPressed }
-                setNeedRefresh = { setNeedRefresh }
-                needRefresh = { needRefresh }/>
+                wordsStore = { wordsStore }/>
             } 
 
             { 
@@ -60,7 +54,7 @@ const AllTheWords = observer( () => {
             }
         </main>
     );
-})
+});
 
 export default AllTheWords;
 

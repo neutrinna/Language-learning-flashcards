@@ -2,11 +2,8 @@ import React, { useState, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import ButtonSave from './ButtonSave';
-import WordsStore from '../../../stores/WordsStore';
 
 import './Word.scss';
-
-const wordsStore = new WordsStore();
 
 const defaultAbsentInputObj = {
     word: true,
@@ -32,13 +29,15 @@ const reWord = /[^a-zA-Z]+/;
 const reTranscription = /[\d\s]+/;
 // const reTranscription = /[^a-zA-Z\ː\:ıæɒɔɜəʌʋʃʒŋθð\[\]]+/;
 const reTranslation = /[^а-яА-ЯёЁ,/]+/;
+    
+const defaultInputs = {
+    word: '',
+    transcription: '',
+    translation: ''
+};
 
 const WordAddingForm = observer(( props ) => {
-    const defaultInputs = {
-        word: '',
-        transcription: '',
-        translation: ''
-    };
+    const wordsStore = props.wordsStore;
 
     const [ absentInput, setAbsentInput ] = useState ( defaultAbsentInputObj );
     const [ fixedWord, setFixedWord ] = useState( defaultInputs );
@@ -69,7 +68,6 @@ const WordAddingForm = observer(( props ) => {
     const saveChanges = () => {
         setSavePressed( prevState => prevState + 1 );
         if(!Object.values( inputMistakes ).join('')) {
-            wordsStore.setIsLoading( true );
             setSavePressed( 0 );
             
             const newWord = {
@@ -79,7 +77,7 @@ const WordAddingForm = observer(( props ) => {
             };
 
             wordsStore.addNewWord( newWord );
-            props.setNeedRefresh( !props.needRefresh )
+            wordsStore.setNeedRefresh( !props.needRefresh );
             setFixedWord( defaultInputs );
             props.setWordAddPressed( !props.wordAddPressed );
             // alert('слово добавлено в конец списка');
@@ -132,7 +130,7 @@ const WordAddingForm = observer(( props ) => {
             </div>}
         </>
     );
-})
+});
 
-export default WordAddingForm
+export default WordAddingForm;
 

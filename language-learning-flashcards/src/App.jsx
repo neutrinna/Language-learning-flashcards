@@ -8,17 +8,17 @@ import AllTheWords from './assets/components/modes/AllTheWords/AllTheWords';
 import SettingMode from './assets/components/modes/SettingMode/SettingMode';
 import TrainingMode from './assets/components/modes/TrainingMode/TrainingMode';
 import NotFoundPage from './assets/components/NotFoundPage';
-import WordsStore from './assets/stores/WordsStore';
 import Loader from './assets/components/Loader';
 import Error from './assets/components/Error';
 
 import './App.css';
 
-const wordsStore = new WordsStore();
+const App = observer( ( props ) => {
+    const wordsStore = props.wordsStore;
 
-const App = observer( () => {
-    useEffect(() => { wordsStore.refreshWordsAPI(); },
-        []);
+    useEffect(() => wordsStore.refreshWordsAPI(),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [ wordsStore.needRefresh ]);
 
     if( wordsStore.error ){
         return <Error name = { wordsStore.error.name } message = { wordsStore.error.message }/>;
@@ -36,8 +36,8 @@ const App = observer( () => {
                     <Header/>
                     <Routes>
                         <Route path = "/" element = { <SettingMode/>}/>
-                        <Route path = "/words" element = { <AllTheWords/> }/>
-                        <Route path = "/game" element = { <TrainingMode/> }/>
+                        <Route path = "/words" element = { <AllTheWords wordsStore = { wordsStore }/> }/>
+                        <Route path = "/game" element = { <TrainingMode wordsStore = { wordsStore }/> }/>
                         <Route path = "*" element = { <NotFoundPage/> }/>
                     </Routes>
                 </Router>

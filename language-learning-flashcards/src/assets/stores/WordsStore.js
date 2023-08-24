@@ -1,43 +1,40 @@
-import { makeAutoObservable, runInAction } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 
 export default class WordsStore {
     wordsAPI = [];
     error = null;
     isLoading = true;
+    needRefresh = false;
 
     constructor(){
         makeAutoObservable( this );
     }
 
-    setIsLoading = arg => {
-        this.isLoading = arg;
-        console.log(this.isLoading);
-    }
+    setNeedRefresh = () => {
+        this.needRefresh = !this.needRefresh;
+    };
 
     refreshWordsAPI = () => {
-        this.isLoading = true;
-
         fetch( '/api/words' )
-        .then(response => {
-            if (response.ok) { 
-                return response.json();
-            } else {
-                throw new Error('Something went wrong ...');
-            }
-        })
-        .then( response => {
-            console.log( response );
-            this.wordsAPI = response;
-            setTimeout( () => this.isLoading = false, 500 );
-        })
-        .catch( error => { 
-            this.error = error;
-            console.log(error);
-            setTimeout( () => this.isLoading = false, 500 );
-        });
-    }
+            .then(response => {
+                if (response.ok) { 
+                    return response.json();
+                } else {
+                    throw new Error('Ошибка выполнения запроса к серверу ...');
+                }
+            })
+            .then( response => {
+                this.wordsAPI = response;
+            })
+            .catch( error => { 
+                this.error = error;
+            })
+            .finally( setTimeout( () => this.isLoading = false, 500 ));
+    };
 
     addNewWord = async newWord => {
+        this.isLoading = true;
+
         try{
             const response = await fetch( 'api/words/add', {
                 method: 'POST',
@@ -49,31 +46,32 @@ export default class WordsStore {
             const data = await response.json();
             // eslint-disable-next-line no-console
             console.log( 'word saved', data );
-            setTimeout( () => this.setIsLoading( false ), 500 );
         }
         catch( error ){ 
             // eslint-disable-next-line no-console
-            console.log( `Ошибка отправки слова на сервер: ${error}`);
-            setTimeout( () => this.setIsLoading( false ), 500 );
+            console.log( `Ошибка отправки слова на сервер: ${error}`);  
+        }
+        finally{
+            setTimeout( () => this.isLoading = false, 500 );
         };
-    }
+    };
 
     saveChanges = ( id, changedWord ) => {
-            fetch( `api/words/${id}/update`, {
-                method: 'POST',
-                body: JSON.stringify( changedWord ),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8'
-                }
-            })
-                .then( response => response.json() )
-                .then( changedWord => {
-                    // eslint-disable-next-line no-console
-                    console.log( changedWord );
-                })
+        fetch( `api/words/${id}/update`, {
+            method: 'POST',
+            body: JSON.stringify( changedWord ),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        })
+            .then( response => response.json() )
+            .then( changedWord => {
                 // eslint-disable-next-line no-console
-                .catch( error => console.log( `Ошибка отправки слова на сервер: ${error}`));
-    }
+                console.log( changedWord );
+            })
+            // eslint-disable-next-line no-console
+            .catch( error => console.log( `Ошибка отправки слова на сервер: ${error}`));
+    };
 
     deleteWord = id => {
         fetch( `api/words/${id}/delete`, {

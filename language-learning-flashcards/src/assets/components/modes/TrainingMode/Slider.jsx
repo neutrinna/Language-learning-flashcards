@@ -1,29 +1,25 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import data from '../../../data/colors.json';
 import arrowBack from '../../../images/arrow-back.svg';
 import arrowForward from '../../../images/arrow-forward.svg';
-import WordsStore from '../../../stores/WordsStore';
 
 import WordCard from './WordCard';
 
 import './Slider.scss';
 
 let offset = 0;
-const wordsStore = new WordsStore();
 
 const Slider = observer(( props ) => {
+    const wordsStore = props.wordsStore;
+
     const [ offsetLeft, setOffset ] = useState( 0 );
     const [ cardIndex, setCardIndex ] = useState( 0 );
     const [ learnedWords, setLearnedWords ] = useState ( 0 );
     let cardsArrLength = wordsStore.wordsAPI.length;
     const ref = useRef();
 
-    useEffect( () => {
-        wordsStore.refreshWordsAPI();
-    }, [] );
-    
     const offsetBack = () => {
         if( wordsStore.wordsAPI === undefined&&wordsStore.wordsAPI.length===0 ) cardsArrLength = data.length;
         offset -= 67;
@@ -32,7 +28,6 @@ const Slider = observer(( props ) => {
             offset = 67 * ( cardsArrLength-1 );
         };
         setOffset( -offset );
-        setCardIndex( offset/67 );
     };
 
     const offsetNext = () => {
@@ -43,8 +38,9 @@ const Slider = observer(( props ) => {
             offset = 0;
         };
         setOffset( -offset );
-        setCardIndex( offset/67 );
     };
+
+    useEffect( () => setCardIndex( -offsetLeft/67 ), [ offsetLeft ]);
 
     const countWordCheck = () => {
         let currentLearnedWordsCount = learnedWords;
@@ -55,11 +51,11 @@ const Slider = observer(( props ) => {
     };
 
     // const setFocus = () => {
-    //     if( ref !== undefined ) ref.current.focus();
+    //     if( ref !== undefined && ref !== null ) ref.current.focus();
     // };
 
     // useEffect(() => {
-    //     if( ref !== undefined ) setTimeout( setFocus, 1050 );
+    //     if( ref !== undefined && ref !== null ) setTimeout( setFocus, 500 );
     // }, [ cardIndex ]);
 
     return(
@@ -88,7 +84,7 @@ const Slider = observer(( props ) => {
             <img src = { arrowForward } alt = "Стрелка вперед" className = "buttons-slider" onClick = { offsetNext }/>
         </div>
     );
-})
+});
 
 WordCard.defaultProps = {
     word: data.word,

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 
 export default class WordsStore {
     wordsAPI = [];
@@ -11,7 +11,7 @@ export default class WordsStore {
     }
 
     setNeedRefresh = () => {
-        this.needRefresh = !this.needRefresh;
+        runInAction( () => this.needRefresh = !this.needRefresh);
     };
 
     refreshWordsAPI = () => {
@@ -24,16 +24,16 @@ export default class WordsStore {
                 }
             })
             .then( response => {
-                this.wordsAPI = response;
+                runInAction( () => this.wordsAPI = response );
             })
             .catch( error => { 
-                this.error = error;
+                runInAction( () => this.error = error );
             })
-            .finally( setTimeout( () => this.isLoading = false, 500 ));
+            .finally( setTimeout( () => runInAction( () => this.isLoading = false ), 500 ));
     };
 
     addNewWord = async newWord => {
-        this.isLoading = true;
+        runInAction( () => this.isLoading = true );
 
         try{
             const response = await fetch( 'api/words/add', {
@@ -52,7 +52,7 @@ export default class WordsStore {
             console.log( `Ошибка отправки слова на сервер: ${error}`);  
         }
         finally{
-            setTimeout( () => this.isLoading = false, 500 );
+            setTimeout( () => runInAction( () => this.isLoading = false ), 500 );
         };
     };
 

@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/Language-learning-flashcards/static/css/main.e45fa837.css",
-    "main.js": "/Language-learning-flashcards/static/js/main.d3a0ebc9.js",
+    "main.css": "/Language-learning-flashcards/static/css/main.e359fd9a.css",
+    "main.js": "/Language-learning-flashcards/static/js/main.51d60c79.js",
     "static/media/Montserrat-Regular.ttf": "/Language-learning-flashcards/static/media/Montserrat-Regular.ceb11275ab638627a643.ttf",
     "static/media/ArchivoBlack-Regular.ttf": "/Language-learning-flashcards/static/media/ArchivoBlack-Regular.e35d38651492de9e7226.ttf",
     "static/media/page.png": "/Language-learning-flashcards/static/media/page.cde6b7813c41f1d8cafa.png",
     "static/media/colors.png": "/Language-learning-flashcards/static/media/colors.efd84890ccee95eae852.png",
-    "static/media/not-found-cat.svg": "/Language-learning-flashcards/static/media/not-found-cat.4ef02c617407c9dc6e269a8d7a2b4b84.svg",
+    "static/media/not-found-cat.svg": "/Language-learning-flashcards/static/media/not-found-cat.d593bd3b229230969fb50e126c434c2a.svg",
     "static/media/buttonTrain.svg": "/Language-learning-flashcards/static/media/buttonTrain.171524834cb2d74af3676a1b71e2ac21.svg",
     "static/media/delete.svg": "/Language-learning-flashcards/static/media/delete.c8f8bc336fa97d263b7a968f69a6cdc5.svg",
-    "static/media/warning-error.svg": "/Language-learning-flashcards/static/media/warning-error.25a4101e4781281fc12ac4c297f9cedd.svg",
+    "static/media/warning-error.svg": "/Language-learning-flashcards/static/media/warning-error.726442585ed4ac58dc921731afed80b6.svg",
     "static/media/edit.svg": "/Language-learning-flashcards/static/media/edit.80f92fdcab7dcdb521db8b619e5b655f.svg",
-    "static/media/cancel.svg": "/Language-learning-flashcards/static/media/cancel.b5de914f716aa807a47102d5ba684a37.svg",
+    "static/media/cancel.svg": "/Language-learning-flashcards/static/media/cancel.e0af889c8e661007763f99843bc764e6.svg",
     "index.html": "/Language-learning-flashcards/index.html",
     "static/media/logo.svg": "/Language-learning-flashcards/static/media/logo.66a024568802031a9fb4d7230572eb7a.svg",
     "static/media/save.svg": "/Language-learning-flashcards/static/media/save.ba0933f245122279494deab273580d5a.svg",
     "static/media/arrow-forward.svg": "/Language-learning-flashcards/static/media/arrow-forward.b70b257eb0a1c65e6734f3028e783fb0.svg",
     "static/media/arrow-back.svg": "/Language-learning-flashcards/static/media/arrow-back.c00b62c530898547d93758f8bf17cd89.svg",
-    "main.e45fa837.css.map": "/Language-learning-flashcards/static/css/main.e45fa837.css.map",
-    "main.d3a0ebc9.js.map": "/Language-learning-flashcards/static/js/main.d3a0ebc9.js.map"
+    "main.e359fd9a.css.map": "/Language-learning-flashcards/static/css/main.e359fd9a.css.map",
+    "main.51d60c79.js.map": "/Language-learning-flashcards/static/js/main.51d60c79.js.map"
   },
   "entrypoints": [
-    "static/css/main.e45fa837.css",
-    "static/js/main.d3a0ebc9.js"
+    "static/css/main.e359fd9a.css",
+    "static/js/main.51d60c79.js"
   ]
 }

@@ -33,6 +33,7 @@ const reTranscription = /[\d\s]+/;
 const reTranslation = /[^а-яА-ЯёЁ,/]+/;
 
 export default function Word( props ) {
+    const wordsStore = props.wordsStore;
     const defaultWord = {
         word: `${props.word}`,
         transcription: `${props.transcription}`,
@@ -82,9 +83,8 @@ export default function Word( props ) {
                 tags: '',
                 tags_json: []
             };
-
-            props.saveChanges( props.id, changedWord );
-
+            wordsStore.saveChanges( props.id, changedWord );
+            
             setButtonState( true );
             setSavePressed( 0 );
             // eslint-disable-next-line no-console
@@ -125,7 +125,7 @@ export default function Word( props ) {
                     <ButtonEdit onClick = { changeButtonsState }/>
                     <ButtonDelete id = { props.id } 
                         setIsDeleted = { setIsDeleted }
-                        deleteWord = { props.deleteWord }/>
+                        wordsStore = { wordsStore }/>
                 </div>
             </section>
             : <>

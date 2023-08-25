@@ -7,8 +7,11 @@ import './ButtonDelete.scss';
 export default function ButtonDelete( props ){
 
     const handleClick =  () => {
+        const wordsStore = props.wordsStore;
+
         props.setIsDeleted( true );
-        props.deleteWord( props.id );
+        wordsStore.deleteWord( props.id );
+        wordsStore.setNeedRefresh( !wordsStore.needRefresh );;
     };
 
     return(

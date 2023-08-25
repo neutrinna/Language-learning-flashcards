@@ -13,6 +13,9 @@ let offset = 0;
 
 const Slider = observer(( props ) => {
     const wordsStore = props.wordsStore;
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect( () => wordsStore.refreshWordsAPI, [ wordsStore.needRefresh ] );
 
     const [ offsetLeft, setOffset ] = useState( 0 );
     const [ cardIndex, setCardIndex ] = useState( 0 );

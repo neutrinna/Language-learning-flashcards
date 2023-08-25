@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import data from '../../../data/colors.json';
@@ -10,6 +10,9 @@ import './AllTheWords.scss';
 const AllTheWords = observer(( props ) => {
     
     const wordsStore = props.wordsStore;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect( () => wordsStore.refreshWordsAPI, [ wordsStore.needRefresh ] );
 
     const [ wordAddPressed, setWordAddPressed ] = useState( false );
 
@@ -44,8 +47,7 @@ const AllTheWords = observer(( props ) => {
                                 transcription = { word.transcription }
                                 translation = { word.russian }
                                 id = { word.id }
-                                saveChanges = { wordsStore.saveChanges }
-                                deleteWord = { wordsStore.deleteWord }/>
+                                wordsStore = { wordsStore }/>
                         );
                     }):
                     data.map(( word, index ) => {

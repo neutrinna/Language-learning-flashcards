@@ -15,7 +15,7 @@ export default class WordsStore {
     };
 
     refreshWordsAPI = () => {
-        fetch( '/api/words' )
+        fetch( 'http://itgirlschool.justmakeit.ru/api/words/' )
             .then(response => {
                 if (response.ok) { 
                     return response.json();
@@ -36,7 +36,7 @@ export default class WordsStore {
         runInAction( () => this.isLoading = true );
 
         try{
-            const response = await fetch( 'api/words/add', {
+            const response = await fetch( 'http://itgirlschool.justmakeit.ru/api/words/add', {
                 method: 'POST',
                 body: JSON.stringify( newWord ),
                 headers: {
@@ -57,7 +57,7 @@ export default class WordsStore {
     };
 
     saveChanges = ( id, changedWord ) => {
-        fetch( `api/words/${id}/update`, {
+        fetch( `http://itgirlschool.justmakeit.ru/api/words/${id}/update`, {
             method: 'POST',
             body: JSON.stringify( changedWord ),
             headers: {
@@ -74,7 +74,7 @@ export default class WordsStore {
     };
 
     deleteWord = id => {
-        fetch( `api/words/${id}/delete`, {
+        fetch( `http://itgirlschool.justmakeit.ru/api/words/${id}/delete`, {
             method: 'POST',
             body: JSON.stringify( '' ),
             headers: {

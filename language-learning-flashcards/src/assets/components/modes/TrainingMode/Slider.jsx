@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { observer } from 'mobx-react-lite';
 
 import data from '../../../data/colors.json';
 import arrowBack from '../../../images/arrow-back.svg';
@@ -9,49 +10,56 @@ import WordCard from './WordCard';
 import './Slider.scss';
 
 let offset = 0;
-// let currentLearnedWordsCount = sessionStorage.getItem( 'currentLearnedWordsCount' ) || 0;
 
-export default function Slider( props ){
+const Slider = observer(( props ) => {
+    const wordsStore = props.wordsStore;
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect( () => wordsStore.refreshWordsAPI, [ wordsStore.needRefresh ] );
+
     const [ offsetLeft, setOffset ] = useState( 0 );
     const [ cardIndex, setCardIndex ] = useState( 0 );
     const [ learnedWords, setLearnedWords ] = useState ( 0 );
+    let cardsArrLength = wordsStore.wordsAPI.length;
     const ref = useRef();
 
     const offsetBack = () => {
+        if( wordsStore.wordsAPI === undefined&&wordsStore.wordsAPI.length===0 ) cardsArrLength = data.length;
         offset -= 67;
 
         if ( offset < 0 ) {
-            offset = 67 * 8;
+            offset = 67 * ( cardsArrLength-1 );
         };
         setOffset( -offset );
-        setCardIndex( offset/67 );
     };
 
     const offsetNext = () => {
+        if( wordsStore.wordsAPI === undefined&&wordsStore.wordsAPI.length===0 ) cardsArrLength = data.length;
         offset += 67;
-        if ( offset > 67 * 8 ) {
+
+        if ( offset > 67 * ( cardsArrLength-1 )) {
             offset = 0;
         };
         setOffset( -offset );
-        setCardIndex( offset/67 );
     };
+
+    useEffect( () => setCardIndex( -offsetLeft/67 ), [ offsetLeft ]);
 
     const countWordCheck = () => {
         let currentLearnedWordsCount = learnedWords;
         currentLearnedWordsCount += 1;
         setLearnedWords( currentLearnedWordsCount );
+        // eslint-disable-next-line no-console
         console.log( `Изучено слов: ${currentLearnedWordsCount}` );
-        // sessionStorage.setItem( 'currentLearnedWordsCount', currentLearnedWordsCount );
     };
 
-    const setFocus = () => {
-        ref.current.focus();
-    };
+    // const setFocus = () => {
+    //     if( ref !== undefined && ref !== null ) ref.current.focus();
+    // };
 
-    useEffect(() => {
-        // ref.current.focus();
-        setTimeout( setFocus, 1050 );
-    }, [ cardIndex ]);
+    // useEffect(() => {
+    //     if( ref !== undefined && ref !== null ) setTimeout( setFocus, 500 );
+    // }, [ cardIndex ]);
 
     return(
         <div className ="Slider">
@@ -59,13 +67,19 @@ export default function Slider( props ){
             <div className ="Slider-wrapper">
                 <div className = "Slider-line">
                     <div className = "Slider-frame" style = { { left: offsetLeft + 'vh' } }>
-                        {data.map(( word, index ) => {
-                            return(
-                                <WordCard key = { word.word } { ...word }
+                        { wordsStore.wordsAPI !== undefined&&wordsStore.wordsAPI.length !==0 ?
+                            wordsStore.wordsAPI.map(( word, index ) => {
+                                return (<WordCard key = { word.id } 
+                                    word = { word.english }
+                                    transcription = { word.transcription }
+                                    translation = { word.russian }
                                     countWordCheck = { countWordCheck }
                                     className = "wordCard"
                                     ref = {  cardIndex === index ? ref : null }
-                                /> );})
+                                /> );}):
+                            data.map(( word, index ) => {
+                                return <WordCard key = { index } {...word} countWordCheck = { countWordCheck }/>;
+                            })
                         }
                     </div>
                 </div>
@@ -73,9 +87,11 @@ export default function Slider( props ){
             <img src = { arrowForward } alt = "Стрелка вперед" className = "buttons-slider" onClick = { offsetNext }/>
         </div>
     );
-}
+});
 
 WordCard.defaultProps = {
     word: data.word,
     translate: data.translation
 };
+
+export default Slider;

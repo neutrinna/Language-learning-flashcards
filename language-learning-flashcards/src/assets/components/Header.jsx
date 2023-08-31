@@ -10,7 +10,7 @@ export default function Header(){
             <ul className = "Header">
                 <li>
                     <Link to = "/" className = "Header__logo Link">
-                        <img src = {logo} alt = "Иконка наушников"/>
+                        <img src = {logo} alt = "Иконка с карточками"/>
                         <div className = "Header__logo-text-wrapper">
                             <div>ONLINE LEARNING</div>
                             <h2><span>ENGLISH</span> FLASHCARDS</h2>

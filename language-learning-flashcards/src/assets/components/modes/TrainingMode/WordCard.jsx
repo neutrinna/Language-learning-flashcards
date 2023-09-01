@@ -5,8 +5,8 @@ import { CSSTransition } from 'react-transition-group';
 import page from '../../../images/page.png';
 import './WordCard.scss';
 
-const WordCard = forwardRef(( props, ref) => {
-    const [  translateCheck, setTranslateCheck ] = useState('');
+const WordCard = forwardRef(( props, ref ) => {
+    const [ translateCheck, setTranslateCheck ] = useState('');
     
     const handleChange = ( event ) => {
         setTranslateCheck( translateCheck? '' : 'display'  );

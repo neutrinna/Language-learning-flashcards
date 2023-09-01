@@ -23,27 +23,27 @@ const Slider = observer(( props ) => {
     let cardsArrLength = wordsStore.wordsAPI.length;
     const ref = useRef();
 
-    const offsetBack = () => {
+    const setSlideOffset = ( offsetDirection ) => {
         if( wordsStore.wordsAPI === undefined&&wordsStore.wordsAPI.length===0 ) cardsArrLength = data.length;
-        offset -= 67;
-
-        if ( offset < 0 ) {
-            offset = 67 * ( cardsArrLength-1 );
-        };
+        if( offsetDirection === 'back' ) {
+            offset -= 67;
+            if ( offset < 0 ) {
+                offset = 67 * ( cardsArrLength-1 );
+            };}
+        else {
+            offset += 67;
+            if ( offset > 67 * ( cardsArrLength-1 )) {
+                offset = 0;
+            };
+        }
         setOffset( -offset );
     };
 
-    const offsetNext = () => {
-        if( wordsStore.wordsAPI === undefined&&wordsStore.wordsAPI.length===0 ) cardsArrLength = data.length;
-        offset += 67;
-
-        if ( offset > 67 * ( cardsArrLength-1 )) {
-            offset = 0;
-        };
-        setOffset( -offset );
-    };
-
-    useEffect( () => setCardIndex( -offsetLeft/67 ), [ offsetLeft ]);
+    useEffect( () => {
+        setCardIndex( -offsetLeft/67 );
+        props.setCurrentSlide( -offsetLeft/67 );
+    }, [ offsetLeft ]);
+    useEffect( () => setSlideOffset( 'forward' ), [ props.nextSlide ]);
 
     const countWordCheck = () => {
         let currentLearnedWordsCount = learnedWords;
@@ -63,7 +63,8 @@ const Slider = observer(( props ) => {
 
     return(
         <div className ="Slider">
-            <img src = { arrowBack } alt = "Стрелка назад" className = "buttons-slider"  onClick = { offsetBack }/>
+            <img src = { arrowBack } alt = "Стрелка назад"
+                className = "buttons-slider"  onClick = { () => setSlideOffset( 'back' ) }/>
             <div className ="Slider-wrapper">
                 <div className = "Slider-line">
                     <div className = "Slider-frame" style = { { left: offsetLeft + 'vh' } }>
@@ -84,7 +85,8 @@ const Slider = observer(( props ) => {
                     </div>
                 </div>
             </div>
-            <img src = { arrowForward } alt = "Стрелка вперед" className = "buttons-slider" onClick = { offsetNext }/>
+            <img src = { arrowForward } alt = "Стрелка вперед" className = "buttons-slider"
+                onClick = { () => setSlideOffset( 'forward' ) }/>
         </div>
     );
 });
